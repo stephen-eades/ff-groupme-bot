@@ -9,21 +9,32 @@ from urllib.request import Request, urlopen
 from flask import Flask, request
 
 app = Flask(__name__)
-bot_id = ""
+bot_id = "REPLACE THIS WITH YOUR BOT ID ONCE BOT IS ADDED TO THE CHAT"
 
 # Called whenever the app's callback URL receives a POST request
 # That'll happen every time a message is sent in the group
 @app.route ('/', methods=['POST'])
 def webhook():
-	data = request.get_json()
-	# 'data' is an object 
+	# 'message' is an object that represents a single GroupMe message.
+	message = request.get_json()
+
+	# TODO: Your bot's logic here
+
 	return "ok", 200
 
+################################################################################
+
+# Send a message in the groupchat
 def reply(msg):
 	url = 'https://api.groupme.com/v3/bots/post'
 	data = {
-		'bot_id' : bot_id,
-		'text'   : msg,
+		'bot_id'		: bot_id,
+		'text'			: msg,
+		'attachments'	: []
 	}
 	request = Request(url, urlencode(data).encode())
 	json = urlopen(request).read().decode()
+
+# Checks whether the message sender is a bot
+def sender_is_bot(message):
+	return message['sender_type'] == "bot"
