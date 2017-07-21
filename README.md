@@ -60,7 +60,7 @@ The Procfile is a text file named `Procfile` exactly, placed in the app's root d
 web: gunicorn app:app --log-file=-
 ```
 
-Here, the Procfile tells Heroku to spin up a Gunicorn Python webserver. It's taking the `app` variable (first `app`), which is a Flask application, from the `app.py` module (second `app`), and running it as a `web` process. The `--log-file=-` tells Heroku to log error messages to stdout, i.e. `heroku logs`.
+Here, the Procfile tells Heroku to spin up a Gunicorn Python webserver. It's taking the `app` variable (*second* `app`), which is a Flask application, from the `app.py` module (*first* `app`), and running it as a `web` process. The `--log-file=-` tells Heroku to log error messages to stdout, i.e. `heroku logs`.
 
 #### `requirements.txt`
 
