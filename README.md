@@ -81,3 +81,68 @@ The bot code itself. With `app = Flask(__name__)`, a Flask application is create
 This means the following function, `webhook()`, will be called every time the homepage of the callback site receives a `POST` request. Because of this, you can think of `webhook()` as the bot's main method whenever it receives any message.
 
 The other functions, which follow the line of pound signs, are just there to make common tasks simpler.
+
+## GroupMe API
+
+#### Structure of Received Messages
+
+GroupMe sends the groupchat's messages as a `POST` request to your callback. This request is formatted as JSON like below:
+
+```json
+{
+  "attachments": [],
+  "avatar_url": "https://i.groupme.com/123456789",
+  "created_at": 1302623328,
+  "group_id": "1234567890",
+  "id": "1234567890",
+  "name": "John",
+  "sender_id": "12345",
+  "sender_type": "user",
+  "source_guid": "GUID",
+  "system": false,
+  "text": "Hello world",
+  "user_id": "1234567890"
+}
+```
+
+Inside `webhook()`, these properties can be accessed with `message['name']`, `message['text']`, and so forth.
+
+The `attachments` array is useful for grabbing pictures, etc. that are attached to a message. The following JSON objects would go in `attachments` if they're attached to a message.
+
+###### Attached Image
+
+```json
+{
+  "type"  : "image",
+  "url"   : "https://i.groupme.com/somethingsomething.large"
+}
+```
+
+###### Attached Location
+```json
+{
+  "type"  : "location",
+  "lng"   : "40.000",
+  "lat"   : "70.000",
+  "name"  : "GroupMe HQ"
+}
+```
+
+#### Structure of Messages You're Sending
+
+This is included here, even though this is abstracted away by `reply()` and `reply_with_image()`.
+
+```json
+{
+  "bot_id"  : bot_id,
+  "text"    : "Hello world",
+  "attachments" : [
+    {
+      "type"  : "image",
+      "url"   : "https://i.groupme.com/somethingsomething.large"
+    }
+  ]
+}
+```
+
+It's worth noting that if you don't have anything you want to attach, the `attachments` array property is entirely optional.
