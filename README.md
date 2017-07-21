@@ -132,7 +132,7 @@ The `attachments` array is useful for grabbing pictures, etc. that are attached 
 
 This is included here, even though this is abstracted away by `reply()` and `reply_with_image()`.
 
-```json
+```js
 {
   "bot_id"  : bot_id,
   "text"    : "Hello world",
