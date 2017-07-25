@@ -18,7 +18,7 @@ def webhook():
 	# 'message' is an object that represents a single GroupMe message.
 	message = request.get_json()
 
-	if 'groot' in message['text'].lower(): # if message contains 'groot', ignoring case...
+	if 'groot' in message['text'].lower() and not sender_is_bot(message): # if message contains 'groot', ignoring case, and sender is not a bot...
 		reply('I am Groot.')
 
 	return "ok", 200
