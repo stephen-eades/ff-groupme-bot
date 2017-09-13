@@ -49,7 +49,7 @@ def reply_with_image(msg, imgURL):
 # Uploads image to GroupMe's services and returns the new URL
 def upload_image_to_groupme(imgURL):
 	imgRequest = requests.get(imgURL, stream=True)
-	filename = 'meme.png'
+	filename = 'temp.png'
 	postImage = None
 	if imgRequest.status_code == 200:
 		# Save Image
