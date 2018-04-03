@@ -7,6 +7,7 @@ import json
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
+import wikipedia
 
 app = Flask(__name__)
 bot_id = "REPLACE THIS WITH YOUR BOT ID ONCE BOT IS ADDED TO THE CHAT"
@@ -18,9 +19,13 @@ def webhook():
 	# 'message' is an object that represents a single GroupMe message.
 	message = request.get_json()
 
-	# TODO: Your bot's logic here
+	if not sender_is_bot(message) and message['text'].startswith('/wiki '):
+		print(generate_summary(message['text'][6:]))
 
 	return "ok", 200
+
+def generate_summary(query):
+	return wikipedia.summary(query)
 
 ################################################################################
 
@@ -45,7 +50,7 @@ def reply_with_image(msg, imgURL):
 	}
 	request = Request(url, urlencode(data).encode())
 	json = urlopen(request).read().decode()
-	
+
 # Uploads image to GroupMe's services and returns the new URL
 def upload_image_to_groupme(imgURL):
 	imgRequest = requests.get(imgURL, stream=True)
