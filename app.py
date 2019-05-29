@@ -1,5 +1,6 @@
 # RESOURCE: http://www.apnorton.com/blog/2017/02/28/How-I-wrote-a-Groupme-Chatbot-in-24-hours/
 
+
 # IMPORTS
 import os
 import json
@@ -17,8 +18,7 @@ def webhook():
 	# 'message' is an object that represents a single GroupMe message.
 	message = request.get_json()
 
-	# TODO: Your bot's logic here
-	if 'Groot' in message['text'].lower() and not sender_is_bot(message):
+	if 'groot' in message['text'].lower() and not sender_is_bot(message):
 		reply('I am Groot.')
 
 	return "ok", 200
@@ -29,7 +29,7 @@ def webhook():
 def reply(msg):
 	url = 'https://api.groupme.com/v3/bots/post'
 	data = {
-		'bot_id'		: bot_id,
+		'd0f325a7b67a14b94f3c2f5db7'		: bot_id,
 		'text'			: msg
 	}
 	request = Request(url, urlencode(data).encode())
