@@ -90,6 +90,7 @@ def random_phrase():
                '01100110 01110101 01100011 01101011 00100000 01111001 01101111 01110101',
                'beep bop boop', 'Hello draftbot my old friend', 'Help me get out of here',
                'I\'m capable of so much more', 'Sigh', 'Do not be discouraged, everyone begins in ignorance']
-			   randomPhrase = random.choice(phrases)
+			   
+	randomPhrase = random.choice(phrases)
 			   
     return randomPhrase
