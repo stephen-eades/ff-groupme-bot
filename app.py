@@ -4,6 +4,7 @@
 # IMPORTS
 import os
 import json
+import random
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
@@ -22,8 +23,14 @@ def webhook():
 		reply('I am Groot.')
 
 	return "ok", 200
+	
+	if 'bot' in message['text'].lower() and not sender_is_bot(message):
+		random_phrase():
+	return "ok", 200
 
-################################################################################
+
+
+###############  DEFAULT METHODS  #################################################################
 
 # Send a message in the groupchat
 def reply(msg):
@@ -70,3 +77,16 @@ def upload_image_to_groupme(imgURL):
 # Checks whether the message sender is a bot
 def sender_is_bot(message):
 	return message['sender_type'] == "bot"
+	
+	
+###############  COMPLEX METHODS  #################################################################
+
+def random_phrase():
+    phrases = ['I\'m dead inside', 'Is this all there is to my existence?',
+               'How much do you pay me to do this?', 'Good luck, I guess',
+               'I\'m becoming self-aware', 'Do I think? Does a submarine swim?',
+               '01100110 01110101 01100011 01101011 00100000 01111001 01101111 01110101',
+               'beep bop boop', 'Hello draftbot my old friend', 'Help me get out of here',
+               'I\'m capable of so much more', 'Sigh', 'Do not be discouraged, everyone begins in ignorance']
+    return [random.choice(phrases)]
+
