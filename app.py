@@ -1,6 +1,5 @@
 # RESOURCE: http://www.apnorton.com/blog/2017/02/28/How-I-wrote-a-Groupme-Chatbot-in-24-hours/
 
-
 # IMPORTS
 import os
 import json
@@ -19,6 +18,8 @@ def webhook():
 	message = request.get_json()
 
 	# TODO: Your bot's logic here
+	if 'Groot' in message['text'].lower() and not sender_is_bot(message):
+		reply('I am Groot.')
 
 	return "ok", 200
 
@@ -45,7 +46,7 @@ def reply_with_image(msg, imgURL):
 	}
 	request = Request(url, urlencode(data).encode())
 	json = urlopen(request).read().decode()
-	
+
 # Uploads image to GroupMe's services and returns the new URL
 def upload_image_to_groupme(imgURL):
 	imgRequest = requests.get(imgURL, stream=True)
