@@ -9,7 +9,7 @@ from urllib.request import Request, urlopen
 from flask import Flask, request
 
 app = Flask(__name__)
-bot_id = "REPLACE THIS WITH YOUR BOT ID ONCE BOT IS ADDED TO THE CHAT"
+bot_id = d0f325a7b67a14b94f3c2f5db7
 
 # Called whenever the app's callback URL receives a POST request
 # That'll happen every time a message is sent in the group
