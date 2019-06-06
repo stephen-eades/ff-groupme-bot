@@ -25,8 +25,7 @@ def webhook():
     return "ok", 200
 
     if 'bot' in message['text'].lower() and not sender_is_bot(message):
-        randomMessage = random_phrase()
-        reply(randomMessage)
+        reply(random_phrase())
 
     return "ok", 200
 
