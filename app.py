@@ -9,12 +9,12 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
 
-print('test print 1')
+#print('test print 1')
 
 app = Flask(__name__)
 bot_id = 'd0f325a7b67a14b94f3c2f5db7'
 
-print('test print 2')
+#print('test print 2')
 # Called whenever the app's callback URL receives a POST request
 # That'll happen every time a message is sent in the group
 @app.route('/', methods=['POST'])
@@ -27,6 +27,16 @@ def webhook():
         reply(random_phrase())
 
     return "ok", 200
+
+
+    # 'message' is an object that represents a single GroupMe message.
+    message = request.get_json()
+
+    if 'test' in message['text'].lower() and not sender_is_bot(message):
+        reply('test response')
+
+    return "ok", 200
+
 
 ###############  DEFAULT METHODS  #################################################################
 
