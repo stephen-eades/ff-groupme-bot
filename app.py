@@ -23,17 +23,8 @@ def webhook():
     # 'message' is an object that represents a single GroupMe message.
     message = request.get_json()
 
-    if 'bot' in message['text'].lower() and not sender_is_bot(message):
-        reply(random_phrase())
-
-    return "ok", 200
-
-
-    # 'message' is an object that represents a single GroupMe message.
-    message = request.get_json()
-
-    if 'test' in message['text'].lower() and not sender_is_bot(message):
-        reply('test response')
+    if 'Chloe' in message['text'].lower() and not sender_is_bot(message):
+        reply('is the best most beautiful girl ever <3333')
 
     return "ok", 200
 
