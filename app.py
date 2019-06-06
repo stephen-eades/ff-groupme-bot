@@ -23,12 +23,15 @@ def webhook():
         reply('test')
 
     return "ok", 200
+    print('test print after first method')
+
+	##### ordering is causing problems. First method will work, second wont
 
     if 'groot' in message['text'].lower() and not sender_is_bot(message):
         reply('I am Groot.')
 
     return "ok", 200
-
+    print('test print after first method')
 
 ###############  DEFAULT METHODS  #################################################################
 
@@ -84,8 +87,6 @@ def upload_image_to_groupme(imgURL):
 def sender_is_bot(message):
     return message['sender_type'] == "bot"
 
-
-###############  COMPLEX METHODS  #################################################################
 
 def random_phrase():
     phrases = ['I\'m dead inside', 'Is this all there is to my existence?',
