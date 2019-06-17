@@ -13,8 +13,8 @@ from flask import Flask, request
 
 app = Flask(__name__)
 bot_id = 'd0f325a7b67a14b94f3c2f5db7'
+league_id = '68383052' # from public test league
 
-#print('test print 2')
 # Called whenever the app's callback URL receives a POST request
 # That'll happen every time a message is sent in the group
 @app.route('/', methods=['POST'])
