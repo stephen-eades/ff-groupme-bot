@@ -9,11 +9,14 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
 
-#print('test print 1')
 
 app = Flask(__name__)
 bot_id = 'd0f325a7b67a14b94f3c2f5db7'
-league_id = '68383052' # from public test league
+# from public test league
+league_id = '68383052'
+season_id = '2019'
+
+
 
 # Called whenever the app's callback URL receives a POST request
 # That'll happen every time a message is sent in the group
@@ -27,6 +30,8 @@ def webhook():
         reply(random_phrase())
     if 'groot' in message['text'].lower() and not sender_is_bot(message):
         reply('I am groot.')
+    if 'test' in message['text'].lower() and not sender_is_bot(message):
+        reply(return_scores_test())
 
     return "ok", 200
 
@@ -100,3 +105,15 @@ def random_phrase():
     randomPhrase = random.choice(phrases)
 
     return randomPhrase
+
+
+def return_scores_test():
+    scores = {}
+    for week in range(1, 17):
+        r = requests.get('http://games.espn.com/ffl/api/v2/scoreboard',
+                         params={'leagueId': 68383052, 'seasonId': 2019, 'matchupPeriodId': week})
+        scores[week] = r.json()
+
+        testScoreReturn = scores[1]
+
+        return testScoreReturn
