@@ -5,7 +5,6 @@
 import os
 import json
 import random
-import requests
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
@@ -29,10 +28,8 @@ def webhook():
 
     if 'bot' in message['text'].lower() and not sender_is_bot(message):
         reply(random_phrase())
-    if 'groot' in message['text'].lower() and not sender_is_bot(message):
-        reply('I am groot.')
     if 'test' in message['text'].lower() and not sender_is_bot(message):
-        reply(return_scores_test())
+        reply('Test success.')
 
     return "ok", 200
 
@@ -106,15 +103,3 @@ def random_phrase():
     randomPhrase = random.choice(phrases)
 
     return randomPhrase
-
-
-def return_scores_test():
-    scores = {}
-    for week in range(1, 17):
-        r = requests.get('http://games.espn.com/ffl/api/v2/scoreboard',
-                         params={'leagueId': 68383052, 'seasonId': 2019, 'matchupPeriodId': week})
-        scores[week] = r.json()
-
-        testScoreReturn = scores[1]
-
-        return testScoreReturn
