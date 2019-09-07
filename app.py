@@ -2,10 +2,11 @@
 import os
 import json
 import random
+import requests
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
-
+from requests.exceptions import HTTPError
 
 app = Flask(__name__)
 bot_id = 'd0f325a7b67a14b94f3c2f5db7'
@@ -27,6 +28,8 @@ def webhook():
         reply(random_phrase())
     if 'test' in message['text'].lower() and not sender_is_bot(message):
         reply('Test success.')
+    if 'api' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentSeason())
 
     return "ok", 200
 
@@ -100,3 +103,9 @@ def random_phrase():
     randomPhrase = random.choice(phrases)
 
     return randomPhrase
+
+
+def getCurrentSeason():
+    var = requests.get('https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leagues/68383052')
+
+    return var
