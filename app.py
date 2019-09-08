@@ -111,7 +111,7 @@ def getCurrentSeason():
     public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/68383052'
     private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/########'
 
-    response = requests.get(public_currentSeason)
+    response = requests.get(url=public_currentSeason, verify=False)
 
     if response:
         out = 'Success!'
