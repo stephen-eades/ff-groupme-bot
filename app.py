@@ -104,9 +104,14 @@ def random_phrase():
 
 
 def getCurrentSeason():
-    testUrl = 'https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leagues/68383052'
 
-    req = Request(testUrl)
+    base = 'https://fantasy.espn.com/apis/v3/'
+    public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
+    private_2017Season = base + 'games/ffl/leagueHistory/########?seasonId=2017'
+    public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/68383052'
+    private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/########'
+
+    req = Request(public_currentSeason)
     res = urlopen(req)
     out = res.read()
 
