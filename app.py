@@ -2,11 +2,9 @@
 import os
 import json
 import random
-import requests
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
-from requests.exceptions import HTTPError
 
 app = Flask(__name__)
 bot_id = 'd0f325a7b67a14b94f3c2f5db7'
@@ -106,6 +104,10 @@ def random_phrase():
 
 
 def getCurrentSeason():
-    var = requests.get('https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leagues/68383052')
+    testUrl = 'https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leagues/68383052'
 
-    return var
+    req = urllib.request.Request(testUrl)
+    res = urllib.request.urlopen(req)
+    out = res.read()
+
+    return out
