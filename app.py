@@ -29,6 +29,8 @@ def webhook():
         reply('Test success.')
     if 'api' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeason())
+    if 'api-p' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentSeasonPrivate())
     return "ok", 200
 
 
@@ -104,6 +106,23 @@ def random_phrase():
 
 
 def getCurrentSeason():
+
+    base = 'https://fantasy.espn.com/apis/v3/'
+    public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
+    private_2017Season = base + 'games/ffl/leagueHistory/########?seasonId=2017'
+    public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/68383052'
+    private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/########'
+
+    response = requests.get(url=public_currentSeason, verify=False)
+
+    if response:
+        out = response
+    else:
+        out = 'An error has occurred while retrieving from the API.'
+
+    return out
+
+def getCurrentSeasonPrivate():
 
     base = 'https://fantasy.espn.com/apis/v3/'
     public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
