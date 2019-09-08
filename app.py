@@ -2,6 +2,7 @@
 import os
 import json
 import random
+import requests
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
@@ -26,9 +27,10 @@ def webhook():
         reply(random_phrase())
     if 'test' in message['text'].lower() and not sender_is_bot(message):
         reply('Test success.')
-    if 'api' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentSeason())
-
+    if 'apiUrllib' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentSeasonUrllib())
+    if 'apiRequests' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentSeasonRequests())
     return "ok", 200
 
 
@@ -103,13 +105,28 @@ def random_phrase():
     return randomPhrase
 
 
-def getCurrentSeason():
+def getCurrentSeasonUrllib():
 
     base = 'https://fantasy.espn.com/apis/v3/'
     public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
     private_2017Season = base + 'games/ffl/leagueHistory/########?seasonId=2017'
     public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/68383052'
     private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/########'
+
+    req = Request(public_currentSeason)
+    res = urlopen(req)
+    out = res.read()
+
+    return out
+
+
+def getCurrentSeasonRequests():
+
+    base = 'https://fantasy.espn.com/apis/v3/'
+    public_2017Season = base + ''
+    private_2017Season = base + ''
+    public_currentSeason = base + ''
+    private_currentSeason = base + ''
 
     req = Request(public_currentSeason)
     res = urlopen(req)
