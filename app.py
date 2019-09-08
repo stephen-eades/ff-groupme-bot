@@ -106,8 +106,8 @@ def random_phrase():
 def getCurrentSeason():
     testUrl = 'https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leagues/68383052'
 
-    req = urllib.request.Request(testUrl)
-    res = urllib.request.urlopen(req)
+    req = Request(testUrl)
+    res = urlopen(req)
     out = res.read()
 
     return out
