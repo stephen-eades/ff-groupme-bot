@@ -131,7 +131,7 @@ def getCurrentSeasonPrivate():
     response = requests.get(url=public_currentSeason, cookies=cookies, verify=False)
 
     if response:
-        out = response.json()
+        out = response.text
     else:
         out = 'An error has occurred while retrieving from the API.'
 
