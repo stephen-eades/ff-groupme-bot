@@ -28,7 +28,7 @@ def webhook():
     if 'test' in message['text'].lower() and not sender_is_bot(message):
         reply('Test success.')
     if 'public' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentSeason())
+        reply(getCurrentSeasonPublic())
     if 'private' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPrivate())
     return "ok", 200
@@ -105,7 +105,7 @@ def random_phrase():
     return randomPhrase
 
 
-def getCurrentSeason():
+def getCurrentSeasonPublic():
 
     base = 'https://fantasy.espn.com/apis/v3/'
     public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
@@ -114,14 +114,17 @@ def getCurrentSeason():
     response = requests.get(url=public_currentSeason, verify=False)
 
     if response:
-        out = response
+        # out = response
+        out = response.text
+        # out = response.content
+        # out = response.json()
     else:
         out = 'An error has occurred while retrieving from the API.'
 
     return out
 
 
-def get2017Season():
+def get2017SeasonPublic():
 
     base = 'https://fantasy.espn.com/apis/v3/'
     public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
@@ -129,7 +132,10 @@ def get2017Season():
     response = requests.get(url=public_2017tSeason, verify=False)
 
     if response:
-        out = response
+        # out = response
+        out = response.text
+        # out = response.content
+        # out = response.json()
     else:
         out = 'An error has occurred while retrieving from the API.'
 
@@ -147,6 +153,9 @@ def getCurrentSeasonPrivate():
 
     if response:
         out = response
+        # out = response.text
+        # out = response.content
+        # out = response.json()
     else:
         out = 'An error has occurred while retrieving from the API.'
 
