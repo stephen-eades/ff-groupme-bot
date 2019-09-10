@@ -118,7 +118,7 @@ def getCurrentSeasonPublic():
     if response:
         # out = response
         # out = response.text
-        out = response.status_code
+        out = response.status_code + " + " + response.text
         # out = response.json()
     else:
         out = 'An error has occurred while retrieving from the API.'
