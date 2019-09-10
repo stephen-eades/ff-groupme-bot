@@ -152,8 +152,8 @@ def getCurrentSeasonPrivate():
     response = requests.get(url=private_currentSeason, cookies=cookies, verify=False)
 
     if response:
-        # out = response
-        out = response.text
+        out = response
+        # out = response.text
         # out = response.content
         # out = response.json()
     else:
