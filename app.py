@@ -129,7 +129,7 @@ def get2017SeasonPublic():
     base = 'https://fantasy.espn.com/apis/v3/'
     public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
 
-    response = requests.get(url=public_2017tSeason, verify=False)
+    response = requests.get(url=public_2017Season, verify=False)
 
     if response:
         # out = response
@@ -152,8 +152,8 @@ def getCurrentSeasonPrivate():
     response = requests.get(url=private_currentSeason, cookies=cookies, verify=False)
 
     if response:
-        out = response
-        # out = response.text
+        # out = response
+        out = response.text
         # out = response.content
         # out = response.json()
     else:
