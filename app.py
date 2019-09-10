@@ -117,8 +117,8 @@ def getCurrentSeasonPublic():
 
     if response:
         # out = response
-        out = response.text
-        # out = response.content
+        # out = response.text
+        out = response.content
         # out = response.json()
     else:
         out = 'An error has occurred while retrieving from the API.'
@@ -177,8 +177,8 @@ def getCurrentSeasonPrivateText():
 
     if response:
         # out = response
-        out = response.text
-        # out = response.content
+        # out = response.text
+        out = response.content
         # out = response.json()
     else:
         out = 'An error has occurred while retrieving from the API.'
