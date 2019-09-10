@@ -118,7 +118,7 @@ def getCurrentSeasonPublic():
     if response:
         # out = response
         # out = response.text
-        out = response.content
+        out = response.status_code
         # out = response.json()
     else:
         out = 'An error has occurred while retrieving from the API.'
@@ -176,10 +176,7 @@ def getCurrentSeasonPrivateText():
     # https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leagues/675759
 
     if response:
-        # out = response
-        # out = response.text
-        out = response.content
-        # out = response.json()
+        out = response.status_code
     else:
         out = 'An error has occurred while retrieving from the API.'
 
