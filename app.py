@@ -147,13 +147,14 @@ def getCurrentSeasonPrivate():
     base = 'https://fantasy.espn.com/apis/v3/'
     private_2017Season = base + 'games/ffl/leagueHistory/675759?seasonId=2017'
     private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
-    cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEADnnU1FkNM%2FCzvBl%2Fv6I2IKmZc8bwT1DLhPnRui%2Fykw2eGcKRJ%2ByoGYrdwdAsBf%2B%2Byig2tQyCwgCBGsYbzSu9L2Bj7rTmFIp79GWaTah0nkCQvQ8Shv0IUZfEJPCeqtmEEnGcEbwD9wdLSmZ3D10pJXL35%2FIp8X1Y55MHTkQ3Or%2F5Y1ccoOz1NTPNtfIBkq2PLK2cHnWRd9wh5%2FUsudry6Ul2a9d6K1L09q3BxIvfVgirsKZPuvDM17TGI%2Bfh89yac1wnURXFoaeHL%2FynaJupaeI1%2BUnWih2jG3JCy0eFWbw%3D%3D"}
+    cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEBLvEKLkqVOa2jgOXhyzYbyrnU0yAlPOR1Ple4ndSmLsiLyIZHBOeO0hraZ2MH5bFOVbfGTcuOwWc3A9YVY25KUVN3hAuMeIebsJdaTPQWPHe%2BAASgiDbA739AkyWmlKVV06Cp4J1PLdShobIrVPFJkASNQM%2Fs3wsdIeU7pJmuzSeHlVzwVoUHZiDM3hq85uH%2FKrJ%2BmmzMnUKAIGyd5GuZrJGEVtVrVupLqcAERUbDH0Fv3BTD29RtKbmpxA5RsqWpQrtkKlbY1%2BhQ1oaYCn6JlsFmTNszhBZQsb4c5uwj4RA%3D%3D"}
 
     response = requests.get(url=private_currentSeason, cookies=cookies, verify=False)
+    # https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leagues/675759
 
     if response:
-        # out = response
-        out = response.text
+        out = response
+        # out = response.text
         # out = response.content
         # out = response.json()
     else:
