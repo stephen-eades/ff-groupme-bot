@@ -29,10 +29,16 @@ def webhook():
         reply('Test success.')
     if 'public' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPublic())
-    if 'private' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentSeasonPrivate())
-    if 'example' in message['text'].lower() and not sender_is_bot(message):
+    if 'privateResponse' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentSeasonPrivateResponse())
+    if 'privateStatus' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentSeasonPrivateStatus())
+    if 'privateContent' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentSeasonPrivateContent())
+    if 'privateText' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPrivateText())
+    if 'privateJson' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentSeasonPrivateJson())
     return "ok", 200
 
 
@@ -110,55 +116,60 @@ def random_phrase():
 def getCurrentSeasonPublic():
 
     base = 'https://fantasy.espn.com/apis/v3/'
-    public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
     public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/68383052'
 
     response = requests.get(url=public_currentSeason, verify=False)
 
     if response:
-        # out = response
-        # out = response.text
-        out = response.status_code + " + " + response.text
-        # out = response.json()
+        out = response
     else:
         out = 'An error has occurred while retrieving from the API.'
 
     return out
 
 
-def get2017SeasonPublic():
+def getCurrentSeasonPrivateResponse():
 
     base = 'https://fantasy.espn.com/apis/v3/'
-    public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
-
-    response = requests.get(url=public_2017Season, verify=False)
-
-    if response:
-        # out = response
-        out = response.text
-        # out = response.content
-        # out = response.json()
-    else:
-        out = 'An error has occurred while retrieving from the API.'
-
-    return out
-
-
-def getCurrentSeasonPrivate():
-
-    base = 'https://fantasy.espn.com/apis/v3/'
-    private_2017Season = base + 'games/ffl/leagueHistory/675759?seasonId=2017'
     private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
     cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEBLvEKLkqVOa2jgOXhyzYbyrnU0yAlPOR1Ple4ndSmLsiLyIZHBOeO0hraZ2MH5bFOVbfGTcuOwWc3A9YVY25KUVN3hAuMeIebsJdaTPQWPHe%2BAASgiDbA739AkyWmlKVV06Cp4J1PLdShobIrVPFJkASNQM%2Fs3wsdIeU7pJmuzSeHlVzwVoUHZiDM3hq85uH%2FKrJ%2BmmzMnUKAIGyd5GuZrJGEVtVrVupLqcAERUbDH0Fv3BTD29RtKbmpxA5RsqWpQrtkKlbY1%2BhQ1oaYCn6JlsFmTNszhBZQsb4c5uwj4RA%3D%3D"}
 
     response = requests.get(url=private_currentSeason, cookies=cookies, verify=False)
-    # https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leagues/675759
 
     if response:
         out = response
-        # out = response.text
-        # out = response.content
-        # out = response.json()
+    else:
+        out = 'An error has occurred while retrieving from the API.'
+
+    return out
+
+
+def getCurrentSeasonPrivateStatus():
+
+    base = 'https://fantasy.espn.com/apis/v3/'
+    private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
+    cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEBLvEKLkqVOa2jgOXhyzYbyrnU0yAlPOR1Ple4ndSmLsiLyIZHBOeO0hraZ2MH5bFOVbfGTcuOwWc3A9YVY25KUVN3hAuMeIebsJdaTPQWPHe%2BAASgiDbA739AkyWmlKVV06Cp4J1PLdShobIrVPFJkASNQM%2Fs3wsdIeU7pJmuzSeHlVzwVoUHZiDM3hq85uH%2FKrJ%2BmmzMnUKAIGyd5GuZrJGEVtVrVupLqcAERUbDH0Fv3BTD29RtKbmpxA5RsqWpQrtkKlbY1%2BhQ1oaYCn6JlsFmTNszhBZQsb4c5uwj4RA%3D%3D"}
+
+    response = requests.get(url=private_currentSeason, cookies=cookies, verify=False)
+
+    if response:
+        out = response.status_code
+    else:
+        out = 'An error has occurred while retrieving from the API.'
+
+    return out
+
+
+def getCurrentSeasonPrivateContent():
+
+    base = 'https://fantasy.espn.com/apis/v3/'
+    private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
+    cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEBLvEKLkqVOa2jgOXhyzYbyrnU0yAlPOR1Ple4ndSmLsiLyIZHBOeO0hraZ2MH5bFOVbfGTcuOwWc3A9YVY25KUVN3hAuMeIebsJdaTPQWPHe%2BAASgiDbA739AkyWmlKVV06Cp4J1PLdShobIrVPFJkASNQM%2Fs3wsdIeU7pJmuzSeHlVzwVoUHZiDM3hq85uH%2FKrJ%2BmmzMnUKAIGyd5GuZrJGEVtVrVupLqcAERUbDH0Fv3BTD29RtKbmpxA5RsqWpQrtkKlbY1%2BhQ1oaYCn6JlsFmTNszhBZQsb4c5uwj4RA%3D%3D"}
+
+    response = requests.get(url=private_currentSeason, cookies=cookies, verify=False)
+
+    if response:
+        out = response.content
     else:
         out = 'An error has occurred while retrieving from the API.'
 
@@ -168,15 +179,29 @@ def getCurrentSeasonPrivate():
 def getCurrentSeasonPrivateText():
 
     base = 'https://fantasy.espn.com/apis/v3/'
-    private_2017Season = base + 'games/ffl/leagueHistory/675759?seasonId=2017'
     private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
     cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEBLvEKLkqVOa2jgOXhyzYbyrnU0yAlPOR1Ple4ndSmLsiLyIZHBOeO0hraZ2MH5bFOVbfGTcuOwWc3A9YVY25KUVN3hAuMeIebsJdaTPQWPHe%2BAASgiDbA739AkyWmlKVV06Cp4J1PLdShobIrVPFJkASNQM%2Fs3wsdIeU7pJmuzSeHlVzwVoUHZiDM3hq85uH%2FKrJ%2BmmzMnUKAIGyd5GuZrJGEVtVrVupLqcAERUbDH0Fv3BTD29RtKbmpxA5RsqWpQrtkKlbY1%2BhQ1oaYCn6JlsFmTNszhBZQsb4c5uwj4RA%3D%3D"}
 
     response = requests.get(url=private_currentSeason, cookies=cookies, verify=False)
-    # https://fantasy.espn.com/apis/v3/games/ffl/seasons/2019/segments/0/leagues/675759
 
     if response:
-        out = response.status_code
+        out = response.text
+    else:
+        out = 'An error has occurred while retrieving from the API.'
+
+    return out
+
+
+def getCurrentSeasonPrivateJson():
+
+    base = 'https://fantasy.espn.com/apis/v3/'
+    private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
+    cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEBLvEKLkqVOa2jgOXhyzYbyrnU0yAlPOR1Ple4ndSmLsiLyIZHBOeO0hraZ2MH5bFOVbfGTcuOwWc3A9YVY25KUVN3hAuMeIebsJdaTPQWPHe%2BAASgiDbA739AkyWmlKVV06Cp4J1PLdShobIrVPFJkASNQM%2Fs3wsdIeU7pJmuzSeHlVzwVoUHZiDM3hq85uH%2FKrJ%2BmmzMnUKAIGyd5GuZrJGEVtVrVupLqcAERUbDH0Fv3BTD29RtKbmpxA5RsqWpQrtkKlbY1%2BhQ1oaYCn6JlsFmTNszhBZQsb4c5uwj4RA%3D%3D"}
+
+    response = requests.get(url=private_currentSeason, cookies=cookies, verify=False)
+
+    if response:
+        out = response.json()
     else:
         out = 'An error has occurred while retrieving from the API.'
 
