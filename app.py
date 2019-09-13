@@ -25,19 +25,19 @@ def webhook():
 
     if 'bot' in message['text'].lower() and not sender_is_bot(message):
         reply(random_phrase())
-    if 'test' in message['text'].lower() and not sender_is_bot(message):
-        reply('Test success.')
+    # if 'test' in message['text'].lower() and not sender_is_bot(message):
+    #     reply('Test success.')
     if 'public' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPublic())
     if 'private' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPrivate())
-    if 'privateStatus' in message['text'].lower() and not sender_is_bot(message):
+    if 'Status' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPrivateStatus())
-    if 'privateContent' in message['text'].lower() and not sender_is_bot(message):
+    if 'Content' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPrivateContent())
-    if 'privateText' in message['text'].lower() and not sender_is_bot(message):
+    if 'Text' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPrivateText())
-    if 'privateJson' in message['text'].lower() and not sender_is_bot(message):
+    if 'Json' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPrivateJson())
     return "ok", 200
 
