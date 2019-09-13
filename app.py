@@ -127,7 +127,7 @@ def getCurrentSeasonPrivate():
 
     cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEBLvEKLkqVOa2jgOXhyzYbyrnU0yAlPOR1Ple4ndSmLsiLyIZHBOeO0hraZ2MH5bFOVbfGTcuOwWc3A9YVY25KUVN3hAuMeIebsJdaTPQWPHe%2BAASgiDbA739AkyWmlKVV06Cp4J1PLdShobIrVPFJkASNQM%2Fs3wsdIeU7pJmuzSeHlVzwVoUHZiDM3hq85uH%2FKrJ%2BmmzMnUKAIGyd5GuZrJGEVtVrVupLqcAERUbDH0Fv3BTD29RtKbmpxA5RsqWpQrtkKlbY1%2BhQ1oaYCn6JlsFmTNszhBZQsb4c5uwj4RA%3D%3D"}
 
-    response = requests.get(url=url, cookies=cookies verify=False)
+    response = requests.get(url=url, cookies=cookies, verify=False)
 
     if response:
         out = response
