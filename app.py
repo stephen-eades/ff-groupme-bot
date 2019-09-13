@@ -29,8 +29,8 @@ def webhook():
         reply('Test success.')
     if 'public' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPublic())
-    if 'privateResponse' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentSeasonPrivateResponse())
+    if 'private' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentSeasonPrivate())
     if 'privateStatus' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPrivateStatus())
     if 'privateContent' in message['text'].lower() and not sender_is_bot(message):
@@ -128,7 +128,7 @@ def getCurrentSeasonPublic():
     return out
 
 
-def getCurrentSeasonPrivateResponse():
+def getCurrentSeasonPrivate():
 
     base = 'https://fantasy.espn.com/apis/v3/'
     private_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
