@@ -25,7 +25,7 @@ def webhook():
 
     if 'bot' in message['text'].lower() and not sender_is_bot(message):
         reply(random_phrase())
-    if 'public' in message['text'].lower() and not sender_is_bot(message):
+    if 'public-league' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPublic())
     if 'private' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPrivate())
@@ -37,7 +37,7 @@ def webhook():
 
 
 
-###############  DEFAULT METHODS  #################################################################
+###############  BOT METHODS  #################################################################
 
 # Send a message in the groupchat
 def reply(msg):
@@ -104,13 +104,18 @@ def random_phrase():
 
     return randomPhrase
 
+############################# # TODO: #################################################
+# Fix SSL CA Cert error via https://stackoverflow.com/a/51408997 => #3. This is currently worked around with verify=False for dev
+# Get response body from private league => response shows 200 and can get data on web through url. But calling for text returns 400?
+# Work on getting from public league and formatting data. Build out functions set to execute based on day of week/time
+#######################################################################################
 
 def getCurrentSeasonPublic():
 
     base = 'https://fantasy.espn.com/apis/v3/'
-    public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/68383052'
+    public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
 
-    response = requests.get(url=public_currentSeason)
+    response = requests.get(url=public_currentSeason, verify=False)
 
     if response:
         out = response
