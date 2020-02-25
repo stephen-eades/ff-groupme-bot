@@ -111,7 +111,7 @@ def getCurrentSeasonPublic():
 
     base = 'https://fantasy.espn.com/apis/v3/'
     public_2017Season = base + 'games/ffl/leagueHistory/68383052?seasonId=2017'
-    public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/68383052'
+    public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
 
     response = requests.get(url=public_currentSeason, verify=False)
 
