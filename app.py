@@ -41,7 +41,7 @@ def reply(msg):
         'text'			: msg
     }
     request = Request(url, urlencode(data).encode())
-    json = urlopen(request).read().decode() ####### ERROR ######
+    json = urlopen(request).read().decode()
 
 
 # Send a message with an image attached in the groupchat
