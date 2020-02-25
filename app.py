@@ -103,8 +103,6 @@ def random_phrase():
 # TODO:
 # Fix SSL CA Cert error via https://stackoverflow.com/a/51408997 => #3. This is currently worked around with verify=False for dev
 # Work on getting from public league and formatting data. Build out functions set to execute based on day of week/time
-r = requests.get('http://server.com/api/2/....')
-pprint(r.json())
 
 def getCurrentSeasonPublic():
 
