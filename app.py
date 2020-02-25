@@ -105,13 +105,20 @@ def random_phrase():
 
 def getCurrentSeasonPublic():
 
+    headers =
+    {
+     'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)     Chrome/37.0.2049.0 Safari/537.36'
+    }
+
     base = 'https://fantasy.espn.com/apis/v3/'
     public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
 
-    response = requests.get(url=public_currentSeason, verify=False)
+    response = requests.get(url=public_currentSeason, headers=headers, verify=False)
 
     if response:
-        out = str(response.text)
+        print response.headers
+        print response
+        out = response.text
     else:
         out = 'An error has occurred while retrieving from the API.'
 
