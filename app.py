@@ -101,6 +101,15 @@ def random_phrase():
     return randomPhrase
 
 
+###############  HELPER METHODS  ########################################################
+
+def formatResponseForGroupMe(data):
+
+    formattedData = data
+
+    return formattedData
+
+
 ###############  FF METHODS  ###########################################################
 
 # TODO:
@@ -113,12 +122,11 @@ def getCurrentSeasonPublic():
     public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
     headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)     Chrome/37.0.2049.0 Safari/537.36' }
 
-    response = requests.get(url=public_currentSeason, headers=headers, verify=False)
+    response = requests.get(url=public_currentSeason, headers=headers, verify=False).json()
 
     if response:
-        response.encoding = 'utf-8'
-        print(response.text)
-        out = response.text
+        out = response.get('members')[0].get('displayName')
+
     else:
         out = 'An error has occurred while retrieving from the API.'
 
