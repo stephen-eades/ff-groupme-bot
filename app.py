@@ -125,7 +125,7 @@ def getCurrentSeasonPublic():
     response = requests.get(url=public_currentSeason, headers=headers, verify=False).json()
 
     if response:
-        print(response.text)
+        print(response)
         out = response.get('members')[0].get('displayName')
 
     else:
