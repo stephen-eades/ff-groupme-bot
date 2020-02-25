@@ -112,8 +112,7 @@ def getCurrentSeasonPublic():
     response = requests.get(url=public_currentSeason, headers=headers, verify=False)
 
     if response:
-        print(response.headers)
-        print(response)
+        response.encoding = 'utf-8'
         print(response.text)
         out = response.text
     else:
