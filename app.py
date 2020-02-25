@@ -112,8 +112,9 @@ def getCurrentSeasonPublic():
     response = requests.get(url=public_currentSeason, headers=headers, verify=False)
 
     if response:
-        print response.headers
-        print response
+        print(response.headers)
+        print(response)
+        print(response.text)
         out = response.text
     else:
         out = 'An error has occurred while retrieving from the API.'
