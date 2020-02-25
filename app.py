@@ -6,6 +6,7 @@ import requests
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
+from pprint import pprint
 
 app = Flask(__name__)
 bot_id = 'd0f325a7b67a14b94f3c2f5db7'
@@ -27,10 +28,10 @@ def webhook():
         reply(random_phrase())
     if 'public-league' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPublic())
-    if 'private' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentSeasonPrivate())
-    if '2018' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentSeasonPrivateText())
+    # if 'private' in message['text'].lower() and not sender_is_bot(message):
+    #     reply(getCurrentSeasonPrivate())
+    # if '2018' in message['text'].lower() and not sender_is_bot(message):
+    #     reply(getCurrentSeasonPrivateText())
     return "ok", 200
 
 
@@ -106,7 +107,8 @@ def random_phrase():
 # TODO:
 # Fix SSL CA Cert error via https://stackoverflow.com/a/51408997 => #3. This is currently worked around with verify=False for dev
 # Work on getting from public league and formatting data. Build out functions set to execute based on day of week/time
-
+r = requests.get('http://server.com/api/2/....')
+pprint(r.json())
 
 def getCurrentSeasonPublic():
 
@@ -116,7 +118,7 @@ def getCurrentSeasonPublic():
     response = requests.get(url=public_currentSeason, verify=False)
 
     if response:
-        out = response
+        out = pprint(response.json())
     else:
         out = 'An error has occurred while retrieving from the API.'
 
