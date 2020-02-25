@@ -31,7 +31,6 @@ def webhook():
     return "ok", 200
 
 
-
 ###############  BOT METHODS  ###########################################################
 
 # Send a message in the groupchat
@@ -42,7 +41,7 @@ def reply(msg):
         'text'			: msg
     }
     request = Request(url, urlencode(data).encode())
-    json = urlopen(request).read().decode()
+    json = urlopen(request).read().decode() ####### ERROR ######
 
 
 # Send a message with an image attached in the groupchat
@@ -112,7 +111,7 @@ def getCurrentSeasonPublic():
     response = requests.get(url=public_currentSeason, verify=False)
 
     if response:
-        out = response.text
+        out = 'testing output'
     else:
         out = 'An error has occurred while retrieving from the API.'
 
