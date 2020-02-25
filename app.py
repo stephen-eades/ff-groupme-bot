@@ -126,7 +126,8 @@ def getCurrentSeasonPublic():
 
     if response:
         print(response)
-        out = response.get('members')[0].get('displayName')
+        random
+        out = response.get('members')[random.randrange(0, 12, 1)].get('lastName')
 
     else:
         out = 'An error has occurred while retrieving from the API.'
