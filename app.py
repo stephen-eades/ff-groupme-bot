@@ -28,10 +28,6 @@ def webhook():
         reply(random_phrase())
     if 'public-league' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentSeasonPublic())
-    # if 'private' in message['text'].lower() and not sender_is_bot(message):
-    #     reply(getCurrentSeasonPrivate())
-    # if '2018' in message['text'].lower() and not sender_is_bot(message):
-    #     reply(getCurrentSeasonPrivateText())
     return "ok", 200
 
 
