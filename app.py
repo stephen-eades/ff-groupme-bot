@@ -26,15 +26,15 @@ def webhook():
     # Each trigger phrase initiates a difference function
     if '$random' in message['text'].lower() and not sender_is_bot(message):
         reply(random_phrase()) # send a random robot phrase
-    if '$get-help' in message['text'].lower() and not sender_is_bot(message):
+    if '$help' in message['text'].lower() and not sender_is_bot(message):
         reply(getBotHelpInformation()) # display all commands and contact email
-    if '$get-league' in message['text'].lower() and not sender_is_bot(message):
+    if '$league' in message['text'].lower() and not sender_is_bot(message):
         reply(getLeagueInformation()) # display all league information
-    if '$get-standings' in message['text'].lower() and not sender_is_bot(message):
+    if '$standings' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentLeagueStandings()) # current overall league standings
-    if '$get-pointsfor' in message['text'].lower() and not sender_is_bot(message):
+    if '$points-for' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentPointsForRankings()) # league rankings for 'points for'
-    if '$get-pointsagainst' in message['text'].lower() and not sender_is_bot(message):
+    if '$points-against' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentPointsAgainstRankings()) # league rankings for 'points against'
 
     return "ok", 200
@@ -127,9 +127,9 @@ def random_phrase():
 # Returns the commands available for the bot and contact information
 def getBotHelpInformation():
 
-    data = [['$random', 'random bot phrase'], ['$get-help', 'show bot commands'],
-     ['$get-league', 'show league info'], ['$get-standings', 'current standings'],
-     ['$get-pointsfor', 'points for ranks'], ['$get-pointsagainst', 'points against ranks']]
+    data = [['$random', 'random bot phrase'], ['$help', 'show bot commands'],
+     ['$league', 'show league info'], ['$standings', 'current league standings'],
+     ['$points-for', 'points for rankings'], ['$points-against', 'points against rankings']]
 
     formatted_string = ""
     col_width = max(len(word) for row in data for word in row) + 2  # padding
