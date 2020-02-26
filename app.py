@@ -9,29 +9,39 @@ from flask import Flask, request
 from pprint import pprint
 
 app = Flask(__name__)
-bot_id = 'd0f325a7b67a14b94f3c2f5db7'
-league_id = '675759'
-season_id = '2019'
+bot_id = 'd0f325a7b67a14b94f3c2f5db7' # required
+league_id = '675759' # required
+base_url = 'https://fantasy.espn.com/apis/v3/'
 
 
 ###############  MAIN  #################################################################
 
-# Called whenever the app's callback URL receives a POST request
-# That'll happen every time a message is sent in the group
+# Occurs when callback URL receives a POST request i.e. message sent in the group
 @app.route('/', methods=['POST'])
 def webhook():
 
-    # 'message' is an object that represents a single GroupMe message.
+    # variable 'message' is an object that represents a single GroupMe message.
     message = request.get_json()
 
-    if 'bot' in message['text'].lower() and not sender_is_bot(message):
-        reply(random_phrase())
-    if 'public-league' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentSeasonPublic())
+    # Each trigger phrase initiates a difference function
+    if '$random' in message['text'].lower() and not sender_is_bot(message):
+        reply(random_phrase()) # send a random robot phrase
+    if '$get-help' in message['text'].lower() and not sender_is_bot(message):
+        reply(getBotHelpInformation()) # display all commands and contact email
+    if '$get-league' in message['text'].lower() and not sender_is_bot(message):
+        reply(getLeagueInformation()) # display all league information
+    if '$get-standings' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentLeagueStandings()) # current overall league standings
+    if '$get-pointsfor' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentPointsForRankings()) # league rankings for 'points for'
+    if '$get-pointsagainst' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentPointsAgainstRankings()) # league rankings for 'points against'
+
     return "ok", 200
 
 
-###############  BOT METHODS  ###########################################################
+
+###############  BOT-REPLY FUNCTIONS  ###########################################################
 
 # Send a message in the groupchat
 def reply(msg):
@@ -86,6 +96,20 @@ def sender_is_bot(message):
     return message['sender_type'] == "bot"
 
 
+
+###############  HELPER METHODS  ########################################################
+
+def formatResponseForGroupMe(data):
+    formattedData = data
+    return formattedData
+
+
+
+###############  COMMAND FUNCTIONS  ###########################################################
+
+# variables
+endpoint = 'games/ffl/seasons/2019/segments/0/leagues/'+league_id+'?view=mMatchupScore&view=mTeam&view=mSettings'
+
 # Returns a randomized robotic phrase
 def random_phrase():
     phrases = ['I\'m dead inside', 'Is this all there is to my existence?',
@@ -100,74 +124,73 @@ def random_phrase():
     return randomPhrase
 
 
-###############  HELPER METHODS  ########################################################
+# Returns the commands available for the bot and contact information
+def getBotHelpInformation():
 
-def formatResponseForGroupMe(data):
+    data = [['$random', 'show a random bot phrase'], ['$get-help', 'show all bot commands'],
+     ['$get-league', 'show all league info'], ['$get-standings', 'current overall league standings'],
+     ['$get-pointsfor', 'points for league rankings'], ['$get-pointsagainst', 'points against league rankings']]
 
-    formattedData = data
+    col_width = max(len(word) for row in data for word in row) + 2  # padding
+    for row in data:
+        print ("".join(word.ljust(col_width) for word in row))
 
-    return formattedData
+    out = "botHelpInfo"
+
+    return out
 
 
-###############  FF METHODS  ###########################################################
+# Returns the leagues general information
+def getLeagueInformation():
 
-# TODO:
-# Fix SSL CA Cert error via https://stackoverflow.com/a/51408997 => #3. This is currently worked around with verify=False for dev
-# Work on getting from public league and formatting data. Build out functions set to execute based on day of week/time
-
-def getCurrentSeasonPublic():
-
-    base = 'https://fantasy.espn.com/apis/v3/'
-    public_test = base + 'games/ffl/seasons/2019/segments/0/leagues/675759'
-    public_currentSeason = base + 'games/ffl/seasons/2019/segments/0/leagues/675759?view=mMatchupScore&view=mTeam&view=mSettings'
-    headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)     Chrome/37.0.2049.0 Safari/537.36' }
-
-    response = requests.get(url=public_currentSeason, headers=headers, verify=False).json()
+    response = requests.get(url=base_url+endpoint, verify=False).json()
 
     if response:
-        print(response)
-        random
         out = response.get('members')[random.randrange(0, 12, 1)].get('lastName')
-
     else:
         out = 'An error has occurred while retrieving from the API.'
 
     return out
 
 
-# def getCurrentSeasonPrivate():
-#
-#     league_id = 675759
-#     year = 2018
-#     url = "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" + \
-#           str(league_id) + "?seasonId=" + str(year)
-#
-#     cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEBLvEKLkqVOa2jgOXhyzYbyrnU0yAlPOR1Ple4ndSmLsiLyIZHBOeO0hraZ2MH5bFOVbfGTcuOwWc3A9YVY25KUVN3hAuMeIebsJdaTPQWPHe%2BAASgiDbA739AkyWmlKVV06Cp4J1PLdShobIrVPFJkASNQM%2Fs3wsdIeU7pJmuzSeHlVzwVoUHZiDM3hq85uH%2FKrJ%2BmmzMnUKAIGyd5GuZrJGEVtVrVupLqcAERUbDH0Fv3BTD29RtKbmpxA5RsqWpQrtkKlbY1%2BhQ1oaYCn6JlsFmTNszhBZQsb4c5uwj4RA%3D%3D"}
-#
-#     response = requests.get(url=url, cookies=cookies, verify=False)
-#
-#     if response:
-#         out = response
-#     else:
-#         out = 'An error has occurred while retrieving from the API.'
-#
-#     return out
+# Returns the current overall league standings
+def getCurrentLeagueStandings():
+
+    response = requests.get(url=base_url+endpoint, verify=False).json()
+
+    if response:
+        out = response.get('members')[random.randrange(0, 12, 1)].get('lastName')
+    else:
+        out = 'An error has occurred while retrieving from the API.'
+
+    return out
 
 
-# def getCurrentSeasonPrivateText():
-#
-#     league_id = 675759
-#     year = 2018
-#     url = "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" + \
-#           str(league_id) + "?seasonId=" + str(year)
-#
-#     cookies={"swid": "{DEB2F8EB-E1D5-49DD-B195-0B34463F4664}", "espn_s2": "AEBLvEKLkqVOa2jgOXhyzYbyrnU0yAlPOR1Ple4ndSmLsiLyIZHBOeO0hraZ2MH5bFOVbfGTcuOwWc3A9YVY25KUVN3hAuMeIebsJdaTPQWPHe%2BAASgiDbA739AkyWmlKVV06Cp4J1PLdShobIrVPFJkASNQM%2Fs3wsdIeU7pJmuzSeHlVzwVoUHZiDM3hq85uH%2FKrJ%2BmmzMnUKAIGyd5GuZrJGEVtVrVupLqcAERUbDH0Fv3BTD29RtKbmpxA5RsqWpQrtkKlbY1%2BhQ1oaYCn6JlsFmTNszhBZQsb4c5uwj4RA%3D%3D"}
-#
-#     response = requests.get(url=url, cookies=cookies, verify=False)
-#
-#     if response:
-#         out = response.text
-#     else:
-#         out = 'An error has occurred while retrieving from the API.'
-#
-#     return out
+# Returns the current overall league rankings for 'points for'
+def getCurrentPointsForRankings():
+
+    response = requests.get(url=base_url+endpoint, verify=False).json()
+
+    if response:
+        out = response.get('members')[random.randrange(0, 12, 1)].get('lastName')
+    else:
+        out = 'An error has occurred while retrieving from the API.'
+
+    return out
+
+
+# Returns the current overall league rankings for 'points for'
+def getCurrentPointsAgainstRankings():
+
+    response = requests.get(url=base_url+endpoint, verify=False).json()
+
+    if response:
+        out = response.get('members')[random.randrange(0, 12, 1)].get('lastName')
+    else:
+        out = 'An error has occurred while retrieving from the API.'
+
+    return out
+
+
+
+    ###############  SCHEDULED FUNCTIONS  ###########################################################
