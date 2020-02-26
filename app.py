@@ -1,6 +1,7 @@
 # IMPORTS
 import os
 import json
+import time
 import random
 import requests
 from urllib.parse import urlencode
@@ -150,9 +151,9 @@ def getLeagueInformation():
 
     if response:
         league_name = response.get('settings').get('name')
-        player_score_type = response.get('settings').get('scoringSettings').get('playerRankType')
-        league_activation_date = response.get('status').get('activatedDate')
-        league_owner_count = response.get('status').get('teamsJoined')
+        player_score_type = str(response.get('settings').get('scoringSettings').get('playerRankType'))
+        league_activation_date = str(time.ctime(response.get('status').get('activatedDate')))
+        league_owner_count = str(response.get('status').get('teamsJoined'))
 
         first_line = league_name + " " + league_owner_count + " person " + player_score_type + " league \n"
         second_line = 'League activated: ' + league_activation_date + '\n'
