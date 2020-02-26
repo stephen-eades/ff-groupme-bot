@@ -137,17 +137,18 @@ def getBotHelpInformation():
         formatted_string += "".join(word.ljust(col_width) for word in row) + '\n'
     out = formatted_string
 
-    print(formatted_string)
     return out
 
 
 # Returns the leagues general information
+# League name
+#
 def getLeagueInformation():
 
     response = requests.get(url=base_url+endpoint, verify=False).json()
 
     if response:
-        out = response.get('members')[random.randrange(0, 12, 1)].get('lastName')
+        out = response.get('settings').get('name')
     else:
         out = 'An error has occurred while retrieving from the API.'
 
