@@ -133,10 +133,10 @@ def getBotHelpInformation():
 
     col_width = max(len(word) for row in data for word in row) + 2  # padding
     for row in data:
-        print ("".join(word.ljust(col_width) for word in row))
+        formatted_string += "".join(word.ljust(col_width) for word in row) + '\n'
+    out = formatted_string
 
-    out = "botHelpInfo"
-
+    print(formatted_string)
     return out
 
 
