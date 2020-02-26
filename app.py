@@ -129,7 +129,7 @@ def getBotHelpInformation():
 
     data = [['$random', 'random bot phrase'], ['$get-help', 'show bot commands'],
      ['$get-league', 'show league info'], ['$get-standings', 'current standings'],
-     ['$get-pointsfor', 'points for rankings'], ['$get-pointsagainst', 'points against rankings']]
+     ['$get-pointsfor', 'points for ranks'], ['$get-pointsagainst', 'points against ranks']]
 
     formatted_string = ""
     col_width = max(len(word) for row in data for word in row) + 2  # padding
