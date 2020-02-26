@@ -131,6 +131,7 @@ def getBotHelpInformation():
      ['$get-league', 'show all league info'], ['$get-standings', 'current overall league standings'],
      ['$get-pointsfor', 'points for league rankings'], ['$get-pointsagainst', 'points against league rankings']]
 
+    formatted_string = ""
     col_width = max(len(word) for row in data for word in row) + 2  # padding
     for row in data:
         formatted_string += "".join(word.ljust(col_width) for word in row) + '\n'
