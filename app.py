@@ -127,9 +127,9 @@ def random_phrase():
 # Returns the commands available for the bot and contact information
 def getBotHelpInformation():
 
-    data = [['$random', 'show a random bot phrase'], ['$get-help', 'show all bot commands'],
-     ['$get-league', 'show all league info'], ['$get-standings', 'current overall league standings'],
-     ['$get-pointsfor', 'points for league rankings'], ['$get-pointsagainst', 'points against league rankings']]
+    data = [['$random', 'random bot phrase'], ['$get-help', 'show bot commands'],
+     ['$get-league', 'show league info'], ['$get-standings', 'current standings'],
+     ['$get-pointsfor', 'points for rankings'], ['$get-pointsagainst', 'points against rankings']]
 
     formatted_string = ""
     col_width = max(len(word) for row in data for word in row) + 2  # padding
