@@ -13,6 +13,7 @@ bot_id = 'd0f325a7b67a14b94f3c2f5db7' # required
 league_id = '675759' # required
 base_url = 'https://fantasy.espn.com/apis/v3/'
 
+# TODO: Convert functino names from mixedcase to python styling guide lower_case_names()
 
 ###############  MAIN  #################################################################
 
@@ -148,7 +149,17 @@ def getLeagueInformation():
     response = requests.get(url=base_url+endpoint, verify=False).json()
 
     if response:
-        out = response.get('settings').get('name')
+        league_name = response.get('settings').get('name')
+        player_score_type = response.get('scoringSettings').get('playerRankType')
+        league_activation_date = response.get('status').get('activatedDate') + '\n'
+        league_owner_count = response.get('status').get('teamsJoined')
+
+        first_line = league_name + " " + league_owner_count + " person " + player_score_type + " league \n"
+        second_line = 'League activated: ' + league_activation_date + '\n'
+        third_line = 'Current Champion: Joshua Bailey \n'
+        fourth_line = 'Total League points: 1,034,495 '
+
+        out = first_line + second_line + third_line + fourth_line
     else:
         out = 'An error has occurred while retrieving from the API.'
 
