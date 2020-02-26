@@ -128,10 +128,10 @@ def random_phrase():
 def getBotHelpInformation():
 
     data = [['$random', 'random bot phrase'], ['$help', 'show bot commands'],
-     ['$league', 'show league info'], ['$standings', 'current league standings'],
-     ['$points-for', 'points for rankings'], ['$points-against', 'points against rankings']]
+     ['$league', 'show league info'], ['$standings', 'current standings'],
+     ['$points-for', 'points for ranks'], ['$points-against', 'points against ranks']]
 
-    formatted_string = ""
+    formatted_string = "AVAILABLE FF-BOT COMMANDS: \n"
     col_width = max(len(word) for row in data for word in row) + 2  # padding
     for row in data:
         formatted_string += "".join(word.ljust(col_width) for word in row) + '\n'
