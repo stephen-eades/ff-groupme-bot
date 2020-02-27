@@ -186,7 +186,7 @@ def getCurrentLeagueProjectedRanks():
 
         # create and add team object to list
         for team in teams:
-            team_data = [str(team.currentProjectedRank), str(team.abbrev), str(team.record.overall.wins+ '-' +team.record.overall.losses+ '-' +team.record.overall.ties)]
+            team_data = [str(team.get('currentProjectedRank')), str(team.get('abbrev')), str(team.get('record').get('overall').get('wins')+ '-' +str(team.get('record').get('overall').get('losses')+ '-' +str(team.get('record').get('overall').get('ties'))]
             league_data.apend(team_date)
 
         # order the rankings
