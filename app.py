@@ -182,7 +182,7 @@ def getCurrentLeagueProjectedRanks():
     response = requests.get(url=base_url+endpoint, verify=False).json()
 
     if response:
-        teams = response.teams
+        teams = response.get('teams')
 
         # create and add team object to list
         for team in teams:
@@ -190,7 +190,7 @@ def getCurrentLeagueProjectedRanks():
             league_data.apend(team_date)
 
         # order the rankings
-        
+
 
         # output the rankings
         col_width = max(len(word) for row in league_data for word in row) + 2  # padding
