@@ -32,8 +32,8 @@ def webhook():
         reply(getBotHelpInformation()) # display all commands and contact email
     if '$league' in message['text'].lower() and not sender_is_bot(message):
         reply(getLeagueInformation()) # display all league information
-    if '$standings' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentLeagueStandings()) # current overall league standings
+    if '$projected-ranks' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentLeagueProjectedRanks()) # ESPN projected ranks
     if '$points-for' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentPointsForRankings()) # league rankings for 'points for'
     if '$points-against' in message['text'].lower() and not sender_is_bot(message):
@@ -101,15 +101,20 @@ def sender_is_bot(message):
 
 ###############  HELPER METHODS  ########################################################
 
+# Use to format response for GroupMe
 def formatResponseForGroupMe(data):
-    formattedData = data
+
+    formattedData = data # do stuff here
+
     return formattedData
 
 # Converts Javascript epoch time to readable date format
 def formatEpochTimeToReadable(data):
+
     readable_date = datetime.datetime.fromtimestamp((data/1000))
 
     return readable_date
+
 
 
 ###############  COMMAND FUNCTIONS  ###########################################################
@@ -135,7 +140,7 @@ def random_phrase():
 def getBotHelpInformation():
 
     data = [['$random', 'random bot phrase'], ['$help', 'show bot commands'],
-     ['$league', 'show league info'], ['$standings', 'current standings'],
+     ['$league', 'show league info'], ['$projected-ranks', 'ESPN projected ranks'],
      ['$points-for', 'points for ranks'], ['$points-against', 'points against ranks']]
 
     formatted_string = "AVAILABLE FF-BOT COMMANDS: \n"
@@ -170,13 +175,28 @@ def getLeagueInformation():
     return out
 
 
-# Returns the current overall league standings
-def getCurrentLeagueStandings():
+# Returns the current overall league projected ranks
+def getCurrentLeagueProjectedRanks():
 
+    league_data = []
     response = requests.get(url=base_url+endpoint, verify=False).json()
 
     if response:
-        out = response.get('members')[random.randrange(0, 12, 1)].get('lastName')
+        teams = response.teams
+
+        # create and add team object to list
+        for team in teams:
+            team_data = [str(team.currentProjectedRank), str(team.abbrev), str(team.record.overall.wins+ '-' +team.record.overall.losses+ '-' +team.record.overall.ties)]
+            league_data.apend(team_date)
+
+        # order the rankings
+        
+
+        # output the rankings
+        col_width = max(len(word) for row in league_data for word in row) + 2  # padding
+        for row in league_data:
+            formatted_string += "".join(word.ljust(col_width) for word in row) + '\n' # this outputs the row
+        out = formatted_string
     else:
         out = 'An error has occurred while retrieving from the API.'
 
