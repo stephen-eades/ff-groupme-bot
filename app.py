@@ -179,6 +179,7 @@ def getLeagueInformation():
 def getCurrentLeagueProjectedRanks():
 
     league_data = []
+    formatted_string = ""
     response = requests.get(url=base_url+endpoint, verify=False).json()
 
     if response:
