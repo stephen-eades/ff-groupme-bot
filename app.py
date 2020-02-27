@@ -105,6 +105,11 @@ def formatResponseForGroupMe(data):
     formattedData = data
     return formattedData
 
+# Converts Javascript epoch time to readable date format
+def formatEpochTimeToReadable(data):
+    readable_date = datetime.datetime.fromtimestamp((data/1000))
+
+    return readable_date
 
 
 ###############  COMMAND FUNCTIONS  ###########################################################
@@ -143,8 +148,6 @@ def getBotHelpInformation():
 
 
 # Returns the leagues general information
-# League name
-#
 def getLeagueInformation():
 
     response = requests.get(url=base_url+endpoint, verify=False).json()
@@ -152,11 +155,11 @@ def getLeagueInformation():
     if response:
         league_name = response.get('settings').get('name')
         player_score_type = str(response.get('settings').get('scoringSettings').get('playerRankType'))
-        league_activation_date = str(datetime.datetime.fromtimestamp(response.get('status').get('activatedDate')/1000))
+        league_creation_year = str(response.get('status').get('previousSeasons')[0])
         league_owner_count = str(response.get('status').get('teamsJoined'))
 
         first_line = league_name + " " + league_owner_count + " person " + player_score_type + " league \n"
-        second_line = 'League activated: ' + league_activation_date + '\n'
+        second_line = 'League Founded: ' + league_creation_year + '\n'
         third_line = 'Current Champion: Joshua Bailey \n'
         fourth_line = 'Total League points: 1,034,495 '
 
