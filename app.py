@@ -115,6 +115,12 @@ def formatEpochTimeToReadable(data):
 
     return readable_date
 
+# Gets the team owners full name using the team id
+def getTeamOwnerName(owner_hash, owners):
+
+    for owner in owners:
+        if owner_hash == owner.get('id')
+            return owner.get('firstName') + ' ' + owner.get('lastName')
 
 
 ###############  COMMAND FUNCTIONS  ###########################################################
@@ -140,7 +146,7 @@ def random_phrase():
 def getBotHelpInformation():
 
     data = [['$random', 'random bot phrase'], ['$help', 'show bot commands'],
-     ['$league', 'show league info'], ['$projected-ranks', 'ESPN projected ranks'],
+     ['$league', 'show league info'], ['$projected-ranks', 'ESPN projections'],
      ['$points-for', 'points for ranks'], ['$points-against', 'points against ranks']]
 
     formatted_string = "AVAILABLE FF-BOT COMMANDS: \n"
@@ -184,16 +190,17 @@ def getCurrentLeagueProjectedRanks():
 
     if response:
         teams = response.get('teams')
+        owners = response.get('members')
 
         # create and add team object to list
         for team in teams:
-            team_data = [str(team.get('currentProjectedRank')), str(team.get('abbrev')), str(team.get('record').get('overall').get('wins')) + '-' + str(team.get('record').get('overall').get('losses')) + '-' +  str(team.get('record').get('overall').get('ties'))]
+            team_data = [str(team.get('currentProjectedRank')), str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(team.get('record').get('overall').get('wins')) + '-' + str(team.get('record').get('overall').get('losses')) + '-' +  str(team.get('record').get('overall').get('ties'))]
             league_data.append(team_data)
 
         # order the rankings, take first element for sort
         def takeFirst(elem):
             return elem[0]
-            
+
         league_data.sort(key=takeFirst)
 
         # output the rankings
