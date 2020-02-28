@@ -119,9 +119,8 @@ def formatEpochTimeToReadable(data):
 def getTeamOwnerName(owner_hash, owners):
 
     for owner in owners:
-        temp_owner_hash = owner.get('id')
-        if owner_hash == temp_owner_hash
-            return owner.get('firstName') + ' ' + owner.get('lastName')
+        if owner_hash == owner.get('id'):
+            return owner.get('firstName')+ ' ' +owner.get('lastName')
 
 
 ###############  COMMAND FUNCTIONS  ###########################################################
