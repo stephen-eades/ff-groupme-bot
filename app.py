@@ -190,8 +190,11 @@ def getCurrentLeagueProjectedRanks():
             team_data = [str(team.get('currentProjectedRank')), str(team.get('abbrev')), str(team.get('record').get('overall').get('wins')) + '-' + str(team.get('record').get('overall').get('losses')) + '-' +  str(team.get('record').get('overall').get('ties'))]
             league_data.append(team_data)
 
-        # order the rankings
-
+        # order the rankings, take first element for sort
+        def takeFirst(elem):
+            return elem[0]
+            
+        league_data.sort(key=takeFirst)
 
         # output the rankings
         col_width = max(len(word) for row in league_data for word in row) + 2  # padding
