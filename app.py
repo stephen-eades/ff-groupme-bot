@@ -203,6 +203,10 @@ def getCurrentLeagueProjectedRanks():
 
         league_data.sort(key=takeFirst)
 
+        # fix for 10,11,12 in sort -> append to end
+        league_data_slice = league_data[1:4]
+        league_data += league_data_slice 
+
         # output the rankings
         col_width = max(len(word) for row in league_data for word in row) + 2  # padding
         for row in league_data:
