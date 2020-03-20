@@ -235,7 +235,7 @@ def getCurrentPointsForRankings():
 
         # create and add team object to list
         for team in teams:
-            team_data = [str(team.get('currentProjectedRank')), str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(team.get('record').get('overall').get('pointsFor'))]
+            team_data = [str(team.get('currentProjectedRank')), str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(truncate(team.get('record').get('overall').get('pointsFor'), 2))]
             league_data.append(team_data)
 
         # order the rankings, take first element for sort
