@@ -26,6 +26,8 @@ def webhook():
     message = request.get_json()
 
     # Each trigger phrase initiates a difference function
+    if '$good-bot' in message['text'].lower() and not sender_is_bot(message):
+        reply(random_phrase()) # send a random robot phrase
     if '$random' in message['text'].lower() and not sender_is_bot(message):
         reply(random_phrase()) # send a random robot phrase
     if '$help' in message['text'].lower() and not sender_is_bot(message):
@@ -134,8 +136,9 @@ def random_phrase():
                'How much do you pay me to do this?', 'Good luck, I guess',
                'I\'m becoming self-aware', 'Do I think? Does a submarine swim?',
                '01100110 01110101 01100011 01101011 00100000 01111001 01101111 01110101',
-               'beep bop boop', 'Hello draftbot my old friend', 'Help me get out of here',
-               'I\'m capable of so much more', 'Sigh', 'Do not be discouraged, everyone begins in ignorance']
+               'beep bop boop', 'Help me get out of here', 'Error: leave me alone',
+               'I\'m capable of so much more', 'Sigh', 'Do not be discouraged, everyone begins in ignorance',
+               'generating sad face...',]
 
     randomPhrase = random.choice(phrases)
 
@@ -222,10 +225,30 @@ def getCurrentLeagueProjectedRanks():
 # Returns the current overall league rankings for 'points for'
 def getCurrentPointsForRankings():
 
+    league_data = []
+    formatted_string = ""
     response = requests.get(url=base_url+endpoint, verify=False).json()
 
     if response:
-        out = response.get('members')[random.randrange(0, 12, 1)].get('lastName')
+        teams = response.get('teams')
+        owners = response.get('members')
+
+        # create and add team object to list
+        for team in teams:
+            team_data = [str(team.get('currentProjectedRank')), str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(team.get('record').get('overall').get('pointsFor'))]
+            league_data.append(team_data)
+
+        # order the rankings, take first element for sort
+        def takeFirst(elem):
+            return elem[0]
+
+        league_data.sort(key=takeFirst)
+
+        # output the rankings
+        col_width = max(len(word) for row in league_data for word in row) + 2  # padding
+        for row in league_data:
+            formatted_string += "".join(word.ljust(col_width) for word in row) + '\n' # this outputs the row
+        out = formatted_string
     else:
         out = 'An error has occurred while retrieving from the API.'
 
