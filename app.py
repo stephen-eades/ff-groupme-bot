@@ -262,18 +262,44 @@ def getCurrentPointsForRankings():
     return out
 
 
-# Returns the current overall league rankings for 'points for'
+# Returns the current overall league rankings for 'points against'
 def getCurrentPointsAgainstRankings():
 
+    league_data = []
+    formatted_string = ""
     response = requests.get(url=base_url+endpoint, verify=False).json()
 
     if response:
-        out = response.get('members')[random.randrange(0, 12, 1)].get('lastName')
+        teams = response.get('teams')
+        owners = response.get('members')
+
+        # create and add team object to list
+        for team in teams:
+            team_data = [str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(round(team.get('record').get('overall').get('pointsAgainst'), 2))]
+            league_data.append(team_data)
+
+        # take first element for sort
+        def takeLast(elem):
+            return elem[1]
+
+        # order the rankings
+        league_data.sort(key=takeLast, reverse=True)
+
+        # add the numbering
+        rank = 1
+        for team in league_data:
+            team.insert(0, str(rank))
+            rank += 1
+
+        # output the rankings
+        col_width = max(len(word) for row in league_data for word in row) + 2  # padding
+        for row in league_data:
+            formatted_string += "".join(word.ljust(col_width) for word in row) + '\n' # this outputs the row
+        out = formatted_string
     else:
         out = 'An error has occurred while retrieving from the API.'
 
     return out
-
 
 
     ###############  SCHEDULED FUNCTIONS  ###########################################################
