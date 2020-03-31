@@ -152,7 +152,7 @@ def getBotHelpInformation():
      ['$league', 'show league info'], ['$projected-ranks', 'ESPN projections'],
      ['$points-for', 'points for ranks'], ['$points-against', 'points against ranks']]
 
-    formatted_string = "AVAILABLE FF-BOT COMMANDS: \n"
+    formatted_string = "### AVAILABLE COMMANDS ### \n start commands with '$'"
     col_width = max(len(word) for row in data for word in row) + 2  # padding
     for row in data:
         formatted_string += "".join(word.ljust(col_width) for word in row) + '\n'
