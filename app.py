@@ -238,16 +238,17 @@ def getCurrentPointsForRankings():
             team_data = [str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(round(team.get('record').get('overall').get('pointsFor'), 2))]
             league_data.append(team_data)
 
-        # order the rankings, take first element for sort
+        # take first element for sort
         def takeLast(elem):
             return elem[1]
 
+        # order the rankings
         league_data.sort(key=takeLast, reverse=True)
 
         # add the numbering
         rank = 1
         for team in league_data:
-            league_data = str(rank)+" "+ team
+            team.insert(0, str(rank))
             rank += 1
 
         # output the rankings
