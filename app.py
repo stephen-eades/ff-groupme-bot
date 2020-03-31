@@ -124,6 +124,13 @@ def getTeamOwnerName(owner_hash, owners):
         if owner_hash == owner.get('id'):
             return owner.get('firstName')+ ' ' +owner.get('lastName')
 
+# Gets the total points for all teams in a season
+def getTotalLeaguePointsForSeason(teams):
+
+    for team in teams:
+        total_league_points += round(team.get('record').get('overall').get('pointsFor'), 2)
+            return total_league_points
+
 
 ###############  COMMAND FUNCTIONS  ###########################################################
 
@@ -152,7 +159,7 @@ def getBotHelpInformation():
      ['$league', 'show league info'], ['$points-for', 'points for ranks'],
      ['$points-against', 'points against ranks'], ['$projected-ranks', 'ESPN projections']]
 
-    formatted_string = "____AVAILABLE_COMMANDS____\n"
+    formatted_string = "#### AVAILABLE COMMANDS ####\n"
     col_width = max(len(word) for row in data for word in row) + 2  # padding
     for row in data:
         formatted_string += "".join(word.ljust(col_width) for word in row) + '\n'
@@ -175,7 +182,7 @@ def getLeagueInformation():
         first_line = league_name + " " + league_owner_count + " person " + player_score_type + " league \n"
         second_line = 'League Founded: ' + league_creation_year + '\n'
         third_line = 'Current Champion: Joshua Bailey \n'
-        fourth_line = 'Total League points: 1,034,495 '
+        fourth_line = 'Total League points: ' + str(getTotalLeaguePointsForSeason(response.get('teams')))
 
         out = first_line + second_line + third_line + fourth_line
     else:
