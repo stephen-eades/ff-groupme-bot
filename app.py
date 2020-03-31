@@ -126,10 +126,12 @@ def getTeamOwnerName(owner_hash, owners):
 
 # Gets the total points for all teams in a season
 def getTotalLeaguePointsForSeason(teams):
+    total_league_points = 0
 
     for team in teams:
         total_league_points += round(team.get('record').get('overall').get('pointsFor'), 2)
-            return total_league_points
+
+        return total_league_points
 
 
 ###############  COMMAND FUNCTIONS  ###########################################################
