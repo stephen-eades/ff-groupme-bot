@@ -235,7 +235,7 @@ def getCurrentPointsForRankings():
 
         # create and add team object to list
         for team in teams:
-            team_data = [str(getTeamOwnerName(team.get('primaryOwner'), owners)), round(team.get('record').get('overall').get('pointsFor'), 2)]
+            team_data = [str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(round(team.get('record').get('overall').get('pointsFor'), 2))]
             league_data.append(team_data)
 
         # order the rankings, take first element for sort
@@ -245,7 +245,7 @@ def getCurrentPointsForRankings():
         league_data.sort(key=takeLast)
 
         # add the rankings
-        
+
 
         # output the rankings
         col_width = max(len(word) for row in league_data for word in row) + 2  # padding
