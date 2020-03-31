@@ -247,7 +247,7 @@ def getCurrentPointsForRankings():
         # add the numbering
         rank = 1
         for team in league_data:
-            league_data = rank+" "+ team
+            league_data = str(rank)+" "+ team
             rank += 1
 
         # output the rankings
