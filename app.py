@@ -242,10 +242,13 @@ def getCurrentPointsForRankings():
         def takeLast(elem):
             return elem[1]
 
-        league_data.sort(key=takeLast)
+        league_data.sort(key=takeLast, reverse=True)
 
-        # add the rankings
-
+        # add the numbering
+        rank = 1
+        for team in league_data:
+            league_data = rank+" "+ team
+            rank += 1
 
         # output the rankings
         col_width = max(len(word) for row in league_data for word in row) + 2  # padding
