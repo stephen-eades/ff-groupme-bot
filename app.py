@@ -34,8 +34,8 @@ def webhook():
         reply(getBotHelpInformation()) # display all commands and contact email
     if '$league' in message['text'].lower() and not sender_is_bot(message):
         reply(getLeagueInformation()) # display all league information
-    if '$projected-ranks' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentLeagueProjectedRanks()) # ESPN projected ranks
+    if '$power-ranks' in message['text'].lower() and not sender_is_bot(message):
+        reply(getCurrentLeaguePowerRanks()) # ESPN power ranks
     if '$points-for' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentPointsForRankings()) # league rankings for 'points for'
     if '$points-against' in message['text'].lower() and not sender_is_bot(message):
@@ -158,7 +158,7 @@ def getBotHelpInformation():
 
     data = [['$help', 'show bot commands'], ['$random', 'random bot phrase'],
      ['$league', 'show league info'], ['$points-for', 'points for ranks'],
-     ['$points-against', 'points against ranks'], ['$projected-ranks', 'ESPN projections']]
+     ['$points-against', 'points against ranks'], ['$power-ranks', 'ESPN power ranks']]
 
     formatted_string = "#### AVAILABLE COMMANDS ####\n"
     col_width = max(len(word) for row in data for word in row) + 2  # padding
@@ -180,20 +180,21 @@ def getLeagueInformation():
         league_creation_year = str(response.get('status').get('previousSeasons')[0])
         league_owner_count = str(response.get('status').get('teamsJoined'))
 
+        header = "#### LEAGUE INFO ####\n"
         first_line = league_name + " " + league_owner_count + " person " + player_score_type + " league \n"
         second_line = 'League Founded: ' + league_creation_year + '\n'
         third_line = 'Current Champion: Joshua Bailey \n'
         fourth_line = 'Total League points: ' + str(getTotalLeaguePointsForSeason(response.get('teams')))
 
-        out = first_line + second_line + third_line + fourth_line
+        out = header + first_line + second_line + third_line + fourth_line
     else:
         out = 'An error has occurred while retrieving from the API.'
 
     return out
 
 
-# Returns the current overall league projected ranks
-def getCurrentLeagueProjectedRanks():
+# Returns the current overall league power ranks
+def getCurrentLeaguePowerRanks():
 
     league_data = []
     formatted_string = ""
@@ -220,6 +221,7 @@ def getCurrentLeagueProjectedRanks():
         del league_data[1:4]
 
         # output the rankings
+        formatted_string = "#### POWER RANKINGS ####\n"
         col_width = max(len(word) for row in league_data for word in row) + 2  # padding
         for row in league_data:
             formatted_string += "".join(word.ljust(col_width) for word in row) + '\n' # this outputs the row
@@ -260,6 +262,7 @@ def getCurrentPointsForRankings():
             rank += 1
 
         # output the rankings
+        formatted_string = "#### POINTS FOR ####\n"
         col_width = max(len(word) for row in league_data for word in row) + 2  # padding
         for row in league_data:
             formatted_string += "".join(word.ljust(col_width) for word in row) + '\n' # this outputs the row
@@ -300,6 +303,7 @@ def getCurrentPointsAgainstRankings():
             rank += 1
 
         # output the rankings
+        formatted_string = "#### POINTS AGAINST ####\n"
         col_width = max(len(word) for row in league_data for word in row) + 2  # padding
         for row in league_data:
             formatted_string += "".join(word.ljust(col_width) for word in row) + '\n' # this outputs the row
