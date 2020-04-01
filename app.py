@@ -324,6 +324,8 @@ def job_min_5():
 
 schedule.every(5).minutes.do(job_min_5)
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+#### CANT DO THIS, HEROKU NEEDS HIGHER LEVEL SCHEDULING
+### INFINITE LOOP HEROKU CANT HANDLE
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
