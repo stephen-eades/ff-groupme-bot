@@ -4,8 +4,8 @@ import json
 import datetime
 import random
 import requests
-import schedule
-import time
+# import schedule
+# import time
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
@@ -318,21 +318,12 @@ def getCurrentPointsAgainstRankings():
 
 ###############  SCHEDULED FUNCTIONS  ###########################################################
 
-def job_min_10():
-    out = "Scheduled event initiated - min10"
-    return out
+# def job_min_5():
+#     out = "Scheduled event initiated - min10"
+#     return out
 
-def job_day_1030():
-    out = "Scheduled event initiated - day1030"
-    return out
-
-
-schedule.every(10).minutes.do(job_min_10)
-schedule.every().day.at("10:30").do(job_day_1030)
-# schedule.every().monday.do(job)
-# schedule.every().wednesday.at("13:15").do(job)
-# schedule.every().minute.at(":17").do(job)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+# schedule.every(5).minutes.do(job_min_5)
+#
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
