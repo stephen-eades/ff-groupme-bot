@@ -323,7 +323,7 @@ def job_min_5():
     return out
 
 schedule.every(5).minutes.do(job_min_5)
-#
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
