@@ -318,11 +318,11 @@ def getCurrentPointsAgainstRankings():
 
 ###############  SCHEDULED FUNCTIONS  ###########################################################
 
-# def job_min_5():
-#     out = "Scheduled event initiated - min10"
-#     return out
+def job_min_5():
+    out = "Scheduled event initiated - min10"
+    return out
 
-# schedule.every(5).minutes.do(job_min_5)
+schedule.every(5).minutes.do(job_min_5)
 #
 # while True:
 #     schedule.run_pending()
