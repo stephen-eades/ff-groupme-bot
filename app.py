@@ -318,17 +318,17 @@ def getCurrentPointsAgainstRankings():
 
 ###############  SCHEDULED FUNCTIONS  ###########################################################
 
-def job():
+def job_min_10():
     out = "Scheduled event initiated - min10"
     return out
 
-def job():
+def job_day_1030():
     out = "Scheduled event initiated - day1030"
     return out
 
 
-schedule.every(10).minutes.do(job)
-schedule.every().day.at("10:30").do(job)
+schedule.every(10).minutes.do(job_min_10)
+schedule.every().day.at("10:30").do(job_day_1030)
 # schedule.every().monday.do(job)
 # schedule.every().wednesday.at("13:15").do(job)
 # schedule.every().minute.at(":17").do(job)
