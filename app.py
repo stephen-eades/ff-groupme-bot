@@ -314,18 +314,3 @@ def getCurrentPointsAgainstRankings():
         out = 'An error has occurred while retrieving from the API.'
 
     return out
-
-
-###############  SCHEDULED FUNCTIONS  ###########################################################
-
-def job_min_5():
-    out = "Scheduled event initiated - min10"
-    return out
-
-schedule.every(5).minutes.do(job_min_5)
-
-#### CANT DO THIS, HEROKU NEEDS HIGHER LEVEL SCHEDULING
-### INFINITE LOOP HEROKU CANT HANDLE
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
