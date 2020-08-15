@@ -43,6 +43,13 @@ def webhook():
     # ESPN power ranks
     if '$power-ranks' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentLeaguePowerRanks())
+    if '$power-ranks-2019' in message['text'].lower() and not sender_is_bot(message):
+        reply(get2019LeaguePowerRanks())
+    if '$power-ranks-2018' in message['text'].lower() and not sender_is_bot(message):
+        reply(get2018LeaguePowerRanks())
+    if '$power-ranks-2017' in message['text'].lower() and not sender_is_bot(message):
+        reply(get2017LeaguePowerRanks())
+
 
     # league rankings for 'points for'
     if '$points-for' in message['text'].lower() and not sender_is_bot(message):
@@ -150,6 +157,7 @@ def getTotalLeaguePointsForSeason(teams):
 
 # variables
 endpoint = 'games/ffl/seasons/2019/segments/0/leagues/'+league_id+'?view=mMatchupScore&view=mTeam&view=mSettings'
+historical_endpoint = 'games/ffl/leagueHistory/'+league_id+'?view=mLiveScoring&view=mMatchupScore&view=mRoster&view=mSettings&view=mStandings&view=mStatus&view=mTeam&view=modular&view=mNav&seasonId='
 
 # Returns a randomized robotic phrase
 def random_phrase():
@@ -243,6 +251,128 @@ def getCurrentLeaguePowerRanks():
         out = 'An error has occurred while retrieving from the API.'
 
     return out
+
+
+# Returns the current overall league power ranks
+def get2019LeaguePowerRanks():
+
+        year = '2019'
+
+        league_data = []
+        formatted_string = ""
+        response = requests.get(url=base_url+historical_endpoint+year, verify=False).json()
+
+        if response:
+            teams = response.get('teams')
+            owners = response.get('members')
+
+            # create and add team object to list
+            for team in teams:
+                team_data = [str(team.get('currentProjectedRank')), str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(team.get('record').get('overall').get('wins')) + '-' + str(team.get('record').get('overall').get('losses')) + '-' +  str(team.get('record').get('overall').get('ties'))]
+                league_data.append(team_data)
+
+            # order the rankings, take first element for sort
+            def takeFirst(elem):
+                return elem[0]
+
+            league_data.sort(key=takeFirst)
+
+            # fix for 10,11,12 in sort -> append to end
+            league_data_slice = league_data[1:4]
+            league_data += league_data_slice
+            del league_data[1:4]
+
+            # output the rankings
+            formatted_string = "#### 2019 POWER RANKINGS ####\n"
+            col_width = max(len(word) for row in league_data for word in row) + 2  # padding
+            for row in league_data:
+                formatted_string += "".join(word.ljust(col_width) for word in row) + '\n' # this outputs the row
+            out = formatted_string
+        else:
+            out = 'An error has occurred while retrieving from the API.'
+
+        return out
+
+# Returns the current overall league power ranks
+def get2018LeaguePowerRanks():
+
+        year = '2018'
+
+        league_data = []
+        formatted_string = ""
+        response = requests.get(url=base_url+historical_endpoint+year, verify=False).json()
+
+        if response:
+            teams = response.get('teams')
+            owners = response.get('members')
+
+            # create and add team object to list
+            for team in teams:
+                team_data = [str(team.get('currentProjectedRank')), str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(team.get('record').get('overall').get('wins')) + '-' + str(team.get('record').get('overall').get('losses')) + '-' +  str(team.get('record').get('overall').get('ties'))]
+                league_data.append(team_data)
+
+            # order the rankings, take first element for sort
+            def takeFirst(elem):
+                return elem[0]
+
+            league_data.sort(key=takeFirst)
+
+            # fix for 10,11,12 in sort -> append to end
+            league_data_slice = league_data[1:4]
+            league_data += league_data_slice
+            del league_data[1:4]
+
+            # output the rankings
+            formatted_string = "#### 2018 POWER RANKINGS ####\n"
+            col_width = max(len(word) for row in league_data for word in row) + 2  # padding
+            for row in league_data:
+                formatted_string += "".join(word.ljust(col_width) for word in row) + '\n' # this outputs the row
+            out = formatted_string
+        else:
+            out = 'An error has occurred while retrieving from the API.'
+
+        return out
+
+
+# Returns the current overall league power ranks
+def get2017LeaguePowerRanks():
+
+        year = '2017'
+
+        league_data = []
+        formatted_string = ""
+        response = requests.get(url=base_url+historical_endpoint+year, verify=False).json()
+
+        if response:
+            teams = response.get('teams')
+            owners = response.get('members')
+
+            # create and add team object to list
+            for team in teams:
+                team_data = [str(team.get('currentProjectedRank')), str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(team.get('record').get('overall').get('wins')) + '-' + str(team.get('record').get('overall').get('losses')) + '-' +  str(team.get('record').get('overall').get('ties'))]
+                league_data.append(team_data)
+
+            # order the rankings, take first element for sort
+            def takeFirst(elem):
+                return elem[0]
+
+            league_data.sort(key=takeFirst)
+
+            # fix for 10,11,12 in sort -> append to end
+            league_data_slice = league_data[1:4]
+            league_data += league_data_slice
+            del league_data[1:4]
+
+            # output the rankings
+            formatted_string = "#### 2017 POWER RANKINGS ####\n"
+            col_width = max(len(word) for row in league_data for word in row) + 2  # padding
+            for row in league_data:
+                formatted_string += "".join(word.ljust(col_width) for word in row) + '\n' # this outputs the row
+            out = formatted_string
+        else:
+            out = 'An error has occurred while retrieving from the API.'
+
+        return out
 
 
 # Returns the current overall league rankings for 'points for'
