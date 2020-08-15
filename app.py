@@ -28,20 +28,31 @@ def webhook():
     message = request.get_json()
 
     # Each trigger phrase initiates a difference function
-    if '$good-bot' in message['text'].lower() and not sender_is_bot(message):
-        reply(random_phrase()) # send a random robot phrase
-    if '$random' in message['text'].lower() and not sender_is_bot(message):
-        reply(random_phrase()) # send a random robot phrase
+    # Send a random robot phrase
+    if '$good-bot' in message['text'].lower() or '$random' in message['text'].lower() and not sender_is_bot(message):
+        reply(random_phrase())
+
+    # Display all commands and contact email
     if '$help' in message['text'].lower() and not sender_is_bot(message):
-        reply(getBotHelpInformation()) # display all commands and contact email
+        reply(getBotHelpInformation())
+
+    # Display all league information
     if '$league' in message['text'].lower() and not sender_is_bot(message):
-        reply(getLeagueInformation()) # display all league information
+        reply(getLeagueInformation())
+
+    # ESPN power ranks
     if '$power-ranks' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentLeaguePowerRanks()) # ESPN power ranks
+        reply(getCurrentLeaguePowerRanks())
+
+    # league rankings for 'points for'
     if '$points-for' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentPointsForRankings()) # league rankings for 'points for'
+        reply(getCurrentPointsForRankings())
+
+    # league rankings for 'points against'
     if '$points-against' in message['text'].lower() and not sender_is_bot(message):
-        reply(getCurrentPointsAgainstRankings()) # league rankings for 'points against'
+        reply(getCurrentPointsAgainstRankings())
+
+
 
     return "ok", 200
 
