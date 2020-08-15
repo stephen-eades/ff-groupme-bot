@@ -264,8 +264,8 @@ def get2019LeaguePowerRanks():
 
         if response:
             print(response)
-            teams = response.get('teams')
-            owners = response.get('members')
+            teams = response[0].get('teams')
+            owners = response[0].get('members')
 
             # create and add team object to list
             for team in teams:
