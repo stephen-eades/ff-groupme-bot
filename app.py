@@ -43,11 +43,11 @@ def webhook():
     # ESPN power ranks
     if '$power-ranks' in message['text'].lower() and not sender_is_bot(message):
         reply(getCurrentLeaguePowerRanks())
-    if '$power-ranks-2019' in message['text'].lower() and not sender_is_bot(message):
+    if '$2019-power-ranks' in message['text'].lower() and not sender_is_bot(message):
         reply(get2019LeaguePowerRanks())
-    if '$power-ranks-2018' in message['text'].lower() and not sender_is_bot(message):
+    if '$2018-power-ranks' in message['text'].lower() and not sender_is_bot(message):
         reply(get2018LeaguePowerRanks())
-    if '$power-ranks-2017' in message['text'].lower() and not sender_is_bot(message):
+    if '$2017-power-ranks' in message['text'].lower() and not sender_is_bot(message):
         reply(get2017LeaguePowerRanks())
 
 
