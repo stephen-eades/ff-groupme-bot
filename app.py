@@ -263,6 +263,7 @@ def get2019LeaguePowerRanks():
         response = requests.get(url=base_url+historical_endpoint+year, verify=False).json()
 
         if response:
+            print(response)
             teams = response.get('teams')
             owners = response.get('members')
 
