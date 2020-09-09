@@ -17,7 +17,7 @@ app = Flask(__name__)
 bot_id = 'd0f325a7b67a14b94f3c2f5db7' # required
 league_id = '675759' # required
 base_url = 'https://fantasy.espn.com/apis/v3/'
-current_year = datetime.datetime.now().year
+current_year = str(datetime.datetime.now().year)
 current_season_endpoint = 'games/ffl/seasons/'+current_year+'/segments/0/leagues/'+league_id+'?view=mMatchupScore&view=mTeam&view=mSettings'
 historic_season_endpoint = 'games/ffl/leagueHistory/'+league_id+'?view=mLiveScoring&view=mMatchupScore&view=mRoster&view=mSettings&view=mStandings&view=mStatus&view=mTeam&view=modular&view=mNav&seasonId='
 
