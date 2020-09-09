@@ -18,9 +18,8 @@ bot_id = 'd0f325a7b67a14b94f3c2f5db7' # required
 league_id = '675759' # required
 base_url = 'https://fantasy.espn.com/apis/v3/'
 current_year = datetime.datetime.now().year
-current_season_endpoint = 'games/ffl/seasons/'+current_year +'/segments/0/leagues/'+league_id+'?view=mMatchupScore&view=mTeam&view=mSettings'
-historic_season_endpoint = 'games/ffl/leagueHistory/'+league_id+'?view=mLiveScoring&view=mMatchupScore&view=mRoster&view=mSettings&view=mStandings&view=mStatus&view=mTeam&view=modular&view=mNav&seasonId=' # BOOKMARK
-
+current_season_endpoint = 'games/ffl/seasons/'+current_year+'/segments/0/leagues/'+league_id+'?view=mMatchupScore&view=mTeam&view=mSettings'
+historic_season_endpoint = 'games/ffl/leagueHistory/'+league_id+'?view=mLiveScoring&view=mMatchupScore&view=mRoster&view=mSettings&view=mStandings&view=mStatus&view=mTeam&view=modular&view=mNav&seasonId='
 
 # TRIGGERED ON CALLBACK
 @app.route('/', methods=['POST'])
@@ -51,6 +50,12 @@ def webhook():
             reply(getHistoricalLeaguePowerRanks('2017'))
         if '$2016-ranks' in message['text'].lower():
             reply(getHistoricalLeaguePowerRanks('2016'))
+        if '$2015-ranks' in message['text'].lower():
+            reply(getHistoricalLeaguePowerRanks('2015'))
+        if '$2014-ranks' in message['text'].lower():
+            reply(getHistoricalLeaguePowerRanks('2014'))
+        if '$2013-ranks' in message['text'].lower():
+            reply(getHistoricalLeaguePowerRanks('2013'))
 
         # POINTS FOR COMMANDS
         if '$current-points-for' in message['text'].lower():
@@ -63,6 +68,12 @@ def webhook():
             reply(getHistoricalPointsForRankings('2017'))
         if '$2016-points-for' in message['text'].lower():
             reply(getHistoricalPointsForRankings('2016'))
+        if '$2015-points-for' in message['text'].lower():
+            reply(getHistoricalPointsForRankings('2015'))
+        if '$2014-points-for' in message['text'].lower():
+            reply(getHistoricalPointsForRankings('2014'))
+        if '$2013-points-for' in message['text'].lower():
+            reply(getHistoricalPointsForRankings('2013'))
 
         # POINTS FOR COMMANDS
         if '$current-points-against' in message['text'].lower():
@@ -75,6 +86,12 @@ def webhook():
             reply(getHistoricalPointsAgainstRankings('2017'))
         if '$2016-points-against' in message['text'].lower():
             reply(getHistoricalPointsAgainstRankings('2016'))
+        if '$2015-points-against' in message['text'].lower():
+            reply(getHistoricalPointsAgainstRankings('2015'))
+        if '$2014-points-against' in message['text'].lower():
+            reply(getHistoricalPointsAgainstRankings('2014'))
+        if '$2013-points-against' in message['text'].lower():
+            reply(getHistoricalPointsAgainstRankings('2013'))
 
     return "ok", 200
 
@@ -170,8 +187,8 @@ def random_phrase():
 def getBotHelpInformation():
     # Returns the commands available for the bot
     data = [['$help', 'show bot commands'], ['$good-bot', 'random bot phrase'],
-     ['$league', 'show league info'], ['$[year]-points-for', 'points for ranks'],
-     ['$[year]-points-against', 'points against ranks'], ['$[year]-ranks', 'ESPN power ranks']]
+     ['$league', 'show league info'], ['$[year]-points-for', 'points for'],
+     ['$[year]-points-against', 'points against'], ['$[year]-ranks', 'ESPN ranks']]
 
     formatted_string = "#### AVAILABLE COMMANDS ####\n"
     col_width = max(len(word) for row in data for word in row) + 2
@@ -182,7 +199,7 @@ def getBotHelpInformation():
 
 def getLeagueInformation():
     # Returns the leagues general information
-    response = requests.get(url=base_url+endpoint, verify=False).json()
+    response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
     if response:
         league_name = response.get('settings').get('name')
         player_score_type = str(response.get('settings').get('scoringSettings').get('playerRankType'))
@@ -236,7 +253,7 @@ def getCurrentLeaguePowerRanks():
 def getHistoricalLeaguePowerRanks(year):
         league_data = []
         formatted_string = ""
-        response = requests.get(url=base_url+historical_endpoint+year, verify=False).json()
+        response = requests.get(url=base_url+historic_season_endpoint+year, verify=False).json()
 
         if response:
             print(response)
@@ -272,7 +289,7 @@ def getCurrentPointsForRankings():
     # Returns the current overall league rankings for 'points for'
     league_data = []
     formatted_string = ""
-    response = requests.get(url=base_url+endpoint, verify=False).json()
+    response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
     if response:
         teams = response.get('teams')
         owners = response.get('members')
@@ -307,7 +324,7 @@ def getHistoricalPointsForRankings(year):
     # Returns the historical league rankings for 'points for' by season
     league_data = []
     formatted_string = ""
-    response = requests.get(url=base_url+historical_endpoint+year, verify=False).json()
+    response = requests.get(url=base_url+historic_season_endpoint+year, verify=False).json()
     if response:
         teams = response.get('teams')
         owners = response.get('members')
@@ -343,7 +360,7 @@ def getCurrentPointsAgainstRankings():
     # Returns the current overall league rankings for 'points against'
     league_data = []
     formatted_string = ""
-    response = requests.get(url=base_url+endpoint, verify=False).json()
+    response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
     if response:
         teams = response.get('teams')
         owners = response.get('members')
@@ -378,7 +395,7 @@ def getHistoricalPointsAgainstRankings(year):
     # Returns the current overall league rankings for 'points against'
     league_data = []
     formatted_string = ""
-    response = requests.get(url=base_url+historical_endpoint+year, verify=False).json()
+    response = requests.get(url=base_url+historic_season_endpoint+year, verify=False).json()
     if response:
         teams = response.get('teams')
         owners = response.get('members')
