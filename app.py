@@ -201,6 +201,7 @@ def getLeagueInformation():
     # Returns the leagues general information
     response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
     if response:
+        print(response)
         league_name = response.get('settings').get('name')
         player_score_type = str(response.get('settings').get('scoringSettings').get('playerRankType'))
         league_creation_year = str(response.get('status').get('previousSeasons')[0])
