@@ -202,7 +202,8 @@ def getLeagueInformation():
     response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
     if response:
         print(response)
-        league_name = response.get('settings').get('name')
+        league_name = response.get('settings').get('name') # none type object aka the league is private....
+        # don't think there is a way around this unless I use the cookie
         player_score_type = str(response.get('settings').get('scoringSettings').get('playerRankType'))
         league_creation_year = str(response.get('status').get('previousSeasons')[0])
         league_owner_count = str(response.get('status').get('teamsJoined'))
