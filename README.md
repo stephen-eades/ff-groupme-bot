@@ -2,6 +2,8 @@
 
 Setup your league's own Fantasy Football data GroupMe chatbot to display important league data at your command. Could not have completed this without the work of @apnorton, @stmorse and @tpagliocco. 
 
+This only works with public ESPN leagues currently.
+
 ## Setup
 
 1. [Install Python 3](https://www.python.org/downloads/)
