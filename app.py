@@ -10,6 +10,7 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
 from pprint import pprint
+from operator import itemgetter
 
 
 
@@ -181,9 +182,13 @@ def getTotalLeaguePointsForSeason(teams):
 ##### FF FUNCTIONS #####
 def getBotHelpInformation():
     # Returns the commands available for the bot
-    data = [['$help', 'show bot commands'], 
-     ['$league', 'show league info'], ['$[year]-points-for', 'points for'],
-     ['$[year]-points-against', 'points against'], ['$[year]-ranks', 'ESPN ranks']]
+    data = [['$help', 'show commands'], ['$league', 'show league info'],
+        ['\n#### CURRENT SEASON ####', ''], 
+        ['$current-pf', 'points for'], ['$current-pa', 'points against'],
+        ['$current-ranks', 'ESPN ranks'],
+        ['\n#### HISTORICAL SEASONS ####', ''], 
+        ['$[year]-pf', 'points for'], ['$[year]-pa', 'points against'],
+        ['$[year]-ranks', 'ESPN ranks']]
 
     formatted_string = "#### AVAILABLE COMMANDS ####\n"
     col_width = max(len(word) for row in data for word in row) + 2
@@ -198,7 +203,6 @@ def getLeagueInformation():
     # Make sure to change your league champion each year. ESPN doesn't provide previous year winner as of now.
     response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
     if response:
-        print(response)
         league_name = response.get('settings').get('name')
         player_score_type = str(response.get('settings').get('scoringSettings').get('playerRankType'))
         league_creation_year = str(response.get('status').get('previousSeasons')[0])
@@ -257,13 +261,12 @@ def getHistoricalLeaguePowerRanks(year):
     response = requests.get(url=base_url+historic_season_endpoint+year, verify=False).json()
 
     if response:
-        print(response)
         teams = response[0].get('teams')
         owners = response[0].get('members')
 
         # create and add team object to list
         for team in teams:
-            team_data = [str(team.get('currentProjectedRank')), str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(team.get('record').get('overall').get('wins')) + '-' + str(team.get('record').get('overall').get('losses')) + '-' +  str(team.get('record').get('overall').get('ties'))]
+            team_data = [str(team.get('rankCalculatedFinal')), str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(team.get('record').get('overall').get('wins')) + '-' + str(team.get('record').get('overall').get('losses')) + '-' +  str(team.get('record').get('overall').get('ties'))]
             league_data.append(team_data)
 
         # order the rankings, take first element for sort
@@ -302,12 +305,9 @@ def getCurrentPointsForRankings():
             team_data = [str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(round(team.get('record').get('overall').get('pointsFor'), 2))]
             league_data.append(team_data)
 
-        # take first element for sort
-        def takeLast(elem):
-            return elem[1]
-
         # order the rankings and add the numbering
-        league_data.sort(key=takeLast, reverse=True)
+        league_data.sort(key = lambda x: float(x[1]), reverse=True)
+
         rank = 1
         for team in league_data:
             team.insert(0, str(rank))
@@ -338,12 +338,9 @@ def getHistoricalPointsForRankings(year):
             team_data = [str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(round(team.get('record').get('overall').get('pointsFor'), 2))]
             league_data.append(team_data)
 
-        # take first element for sort
-        def takeLast(elem):
-            return elem[1]
-
         # order the rankings and add the numbering
-        league_data.sort(key=takeLast, reverse=True)
+        league_data.sort(key = lambda x: float(x[1]), reverse=True)
+
         rank = 1
         for team in league_data:
             team.insert(0, str(rank))
@@ -374,12 +371,9 @@ def getCurrentPointsAgainstRankings():
             team_data = [str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(round(team.get('record').get('overall').get('pointsAgainst'), 2))]
             league_data.append(team_data)
 
-        # take first element for sort
-        def takeLast(elem):
-            return elem[1]
-
         # order the rankings and add the numbering
-        league_data.sort(key=takeLast, reverse=True)
+        league_data.sort(key = lambda x: float(x[1]), reverse=True)
+
         rank = 1
         for team in league_data:
             team.insert(0, str(rank))
@@ -410,12 +404,9 @@ def getHistoricalPointsAgainstRankings(year):
             team_data = [str(getTeamOwnerName(team.get('primaryOwner'), owners)), str(round(team.get('record').get('overall').get('pointsAgainst'), 2))]
             league_data.append(team_data)
 
-        # take first element for sort
-        def takeLast(elem):
-            return elem[1]
-
         # order the rankings and add the numbering
-        league_data.sort(key=takeLast, reverse=True)
+        league_data.sort(key = lambda x: float(x[1]), reverse=True)
+        
         rank = 1
         for team in league_data:
             team.insert(0, str(rank))
