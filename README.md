@@ -4,7 +4,7 @@
 
 Setup your league's own Fantasy Football data GroupMe chatbot to display important league data at your command. Could not have completed this without the work of @apnorton, @stmorse and @tpagliocco. 
 
-This now supports both Public and Private ESPN leagues. Private league users need to acquire cookies used for login.
+This now supports both Public and Private ESPN leagues. Private league users need to acquire cookies used for login. If you need help, check out this Chrome extension which can [get the cookies for you.](https://chrome.google.com/webstore/detail/espn-private-league-key-a/bakealnpgdijapoiibbgdbogehhmaopn?hl=en-US)
 
 ## Setup
 
