@@ -4,7 +4,7 @@
 
 Setup your league's own Fantasy Football data GroupMe chatbot to display important league data at your command. Could not have completed this without the work of @apnorton, @stmorse and @tpagliocco. 
 
-This only works with public ESPN leagues currently.
+This now supports both Public and Private ESPN leagues. Private league users need to acquire cookies used for login.
 
 ## Setup
 
@@ -16,7 +16,7 @@ This only works with public ESPN leagues currently.
 
 4. Clone this repository and navigate to the root with the Heroku CLI.
 
-5. Add your ESPN league ID and plug in your GroupMe ID to the app.py variables. Adjust functions to fit your league. Note that historical data requests reach back as early as 2013, you can easily extend this in the code.
+5. Add your ESPN league ID and plug in your GroupMe ID to the app.py variables. Adjust functions to fit your league. Note that historical data requests reach back as early as 2013, you can easily extend this in the code. Private league users need to input the two cookies (swid and espn_s2) required for private league requests.
 
 6. Log in to the Heroku CLI by calling `heroku login`
 
