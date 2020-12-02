@@ -22,8 +22,9 @@ base_url = 'https://fantasy.espn.com/apis/v3/'
 current_year = str(datetime.datetime.now().year)
 current_season_endpoint = 'games/ffl/seasons/'+current_year+'/segments/0/leagues/'+league_id+'?view=mMatchupScore&view=mTeam&view=mSettings'
 historic_season_endpoint = 'games/ffl/leagueHistory/'+league_id+'?view=mLiveScoring&view=mMatchupScore&view=mRoster&view=mSettings&view=mStandings&view=mStatus&view=mTeam&view=modular&view=mNav&seasonId='
-
-
+private_league = False # Set to True and define below cookies to use with Private leagues. For more info visit: https://stmorse.github.io/journal/espn-fantasy-3-python.html
+swid_cookie = ''
+espn_s2_cookie = ''
 
 ##### MAIN CALLBACK #####
 @app.route('/', methods=['POST'])
@@ -200,8 +201,13 @@ def getBotHelpInformation():
 
 def getLeagueInformation():
     # Returns the leagues general information
-    # Make sure to change your league champion each year. ESPN doesn't provide previous year winner as of now.
-    response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
+    if (private_league == True):
+        # Private leagues need cookies added to request
+        response = requests.get(url=base_url+current_season_endpoint, verify=False, cookies={'swid': swid_cookie, 'espn_s2': espn_s2_cookie}).json()
+    else:
+        # Public leagues are fine without cookies
+        response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
+    
     if response:
         league_name = response.get('settings').get('name')
         player_score_type = str(response.get('settings').get('scoringSettings').get('playerRankType'))
@@ -210,6 +216,7 @@ def getLeagueInformation():
         header = "#### LEAGUE INFO ####\n"
         first_line = league_name + " " + league_owner_count + " person " + player_score_type + " league \n"
         second_line = 'League Founded: ' + league_creation_year + '\n'
+        # Make sure to change your league champion each year. ESPN doesn't provide previous year winner as of now.
         third_line = 'Current Champion: Joshua Bailey \n' # Update this
         fourth_line = 'Total League points: ' + str(getTotalLeaguePointsForSeason(response.get('teams')))
         out = header + first_line + second_line + third_line + fourth_line
@@ -222,7 +229,13 @@ def getCurrentLeaguePowerRanks():
     # Returns the current overall league power ranks
     league_data = []
     formatted_string = ""
-    response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
+    if (private_league == True):
+        # Private leagues need cookies added to request
+        response = requests.get(url=base_url+current_season_endpoint, verify=False, cookies={'swid': swid_cookie, 'espn_s2': espn_s2_cookie}).json()
+    else:
+        # Public leagues are fine without cookies
+        response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
+
     if response:
         teams = response.get('teams')
         owners = response.get('members')
@@ -295,7 +308,13 @@ def getCurrentPointsForRankings():
     # Returns the current overall league rankings for 'points for'
     league_data = []
     formatted_string = ""
-    response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
+    if (private_league == True):
+        # Private leagues need cookies added to request
+        response = requests.get(url=base_url+current_season_endpoint, verify=False, cookies={'swid': swid_cookie, 'espn_s2': espn_s2_cookie}).json()
+    else:
+        # Public leagues are fine without cookies
+        response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
+
     if response:
         teams = response.get('teams')
         owners = response.get('members')
@@ -361,7 +380,13 @@ def getCurrentPointsAgainstRankings():
     # Returns the current overall league rankings for 'points against'
     league_data = []
     formatted_string = ""
-    response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
+    if (private_league == True):
+        # Private leagues need cookies added to request
+        response = requests.get(url=base_url+current_season_endpoint, verify=False, cookies={'swid': swid_cookie, 'espn_s2': espn_s2_cookie}).json()
+    else:
+        # Public leagues are fine without cookies
+        response = requests.get(url=base_url+current_season_endpoint, verify=False).json()
+
     if response:
         teams = response.get('teams')
         owners = response.get('members')
