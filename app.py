@@ -2,15 +2,10 @@
 import os
 import json
 import datetime
-import random
 import requests
-import schedule
-import time
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from flask import Flask, request
-from pprint import pprint
-from operator import itemgetter
 
 
 
@@ -45,6 +40,8 @@ def webhook():
         # POWER RANK COMMANDS
         if '$current-ranks' in message['text'].lower():
             reply(getCurrentLeaguePowerRanks())
+        if '$2020-ranks' in message['text'].lower():
+            reply(getHistoricalLeaguePowerRanks('2020'))
         if '$2019-ranks' in message['text'].lower():
             reply(getHistoricalLeaguePowerRanks('2019'))
         if '$2018-ranks' in message['text'].lower():
@@ -63,6 +60,8 @@ def webhook():
         # POINTS FOR COMMANDS
         if '$current-points-for' in message['text'].lower():
             reply(getCurrentPointsForRankings())
+        if '$2020-pf' in message['text'].lower():
+            reply(getHistoricalPointsForRankings('2020'))
         if '$2019-points-for' in message['text'].lower():
             reply(getHistoricalPointsForRankings('2019'))
         if '$2018-points-for' in message['text'].lower():
@@ -81,6 +80,8 @@ def webhook():
         # POINTS AGAINST COMMANDS
         if '$current-points-against' in message['text'].lower():
             reply(getCurrentPointsAgainstRankings())
+        if '$2020-pa' in message['text'].lower():
+            reply(getHistoricalPointsAgainstRankings('2020'))
         if '$2019-points-against' in message['text'].lower():
             reply(getHistoricalPointsAgainstRankings('2019'))
         if '$2018-points-against' in message['text'].lower():
@@ -102,15 +103,10 @@ def webhook():
 
 ##### REPLY FUNCTIONS #####
 def reply(msg):
-    url = 'https://api.groupme.com/v3/bots/post'
-    headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)     Chrome/37.0.2049.0 Safari/537.36' }
-    data = {
-        'bot_id'		: bot_id,
-        'text'			: msg,
-        'headers'       : headers
-    }
-    request = Request(url, urlencode(data).encode())
-    json = urlopen(request).read().decode()
+    url = "https://api.groupme.com/v3/bots/post"
+    payload={"text": msg, "bot_id": bot_id}
+    payload_string = json.dumps(payload)
+    response = requests.post(url, data=payload_string)
 
 
 def reply_with_image(msg, imgURL):
